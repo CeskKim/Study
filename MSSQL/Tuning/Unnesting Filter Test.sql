@@ -10,7 +10,7 @@ BEGIN
 	CREATE TABLE TBLUnnest
 	(
 		RegSeq	INT	 IDENTITY(1,1)	,
-		RegDate	NCHAR(8)			      ,
+		RegDate	NCHAR(8)		,
 		CONSTRAINT  PK_TBLUnnest PRIMARY KEY(RegSeq)		
 	)
 END
@@ -74,7 +74,7 @@ BEGIN
 	CREATE TABLE TBLUnnestDetail
 	(
 		RegSeq		INT	 IDENTITY(1,1)	,
-		ProudctID	NVARCHAR(100)		    ,
+		ProudctID	NVARCHAR(100)		,
 		Discount	INT
 		CONSTRAINT  PK_TBLUnnestDetail PRIMARY KEY(RegSeq)		
 	)
