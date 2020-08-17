@@ -2,14 +2,14 @@ USE TestDB
 GO
 
 /*************************************************************************************************
- Å×ÀÌºí »ı¼º ¹× ÀÎµ¦½º »ı¼º
+ í…Œì´ë¸” ìƒì„± ë° ì¸ë±ìŠ¤ ìƒì„±
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLHighFrgmentation') AND Xtype = 'U')
 BEGIN
 	CREATE TABLE TBLHighFrgmentation
 	(
 		UniqueID	 UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
-		FirstName	 NVARCHAR(100)								 ,
+		FirstName	 NVARCHAR(100)				     ,
 		LastName	 NVARCHAR(100)					
 	)
 END
@@ -26,7 +26,7 @@ BEGIN
 	CREATE TABLE TBLLowFragmentation
 	(
 		UniqueID	 UNIQUEIDENTIFIER DEFAULT NEWID() PRIMARY KEY,
-		FirstName	 NVARCHAR(100)								 ,
+		FirstName	 NVARCHAR(100)				     ,
 		LastName	 NVARCHAR(100)					
 	)
 END
@@ -39,7 +39,7 @@ END
 GO
 
 /*************************************************************************************************
- µ¥ÀÌÅÍ »ğÀÔ
+ ë°ì´í„° ì‚½ì…
 **************************************************************************************************/
 INSERT INTO TBLHighFrgmentation(FirstName, LastName)
 SELECT TOP 100000 A.name, B.name
@@ -55,18 +55,18 @@ SELECT A.UniqueID,A.FirstName,A.LastName
 
 
 /*************************************************************************************************
- µ¥ÀÌÅÍ Á¶È¸
+ ë°ì´í„° ì¡°íšŒ
 **************************************************************************************************/
 -------------------------------------------
---DMV¸¦ ÅëÇÑ Á¶°¢È­ ºñÀ² Á¶È¸
---DMV(Dynamic Management Views) : ¼º´É °ü·Ã Á¤º¸ ¼öÁı
+--DMVë¥¼ í†µí•œ ì¡°ê°í™” ë¹„ìœ¨ ì¡°íšŒ
+--DMV(Dynamic Management Views) : ì„±ëŠ¥ ê´€ë ¨ ì •ë³´ ìˆ˜ì§‘
 -------------------------------------------
 SELECT OBJECT_NAME(ps.object_id) AS table_name
       ,i.name					 AS index_name
       ,ps.index_id
       ,ps.index_depth
-      ,avg_fragmentation_in_percent		--³í¸®Àû Á¶°¢È­ ºñÀ²
-      ,fragment_count					--ÀÎµ¦½º Á¶°¢¼ö
+      ,avg_fragmentation_in_percent		--ë…¼ë¦¬ì  ì¡°ê°í™” ë¹„ìœ¨
+      ,fragment_count				--ì¸ë±ìŠ¤ ì¡°ê°ìˆ˜
       ,page_count						
       ,avg_page_space_used_in_percent
       ,record_count
@@ -77,19 +77,19 @@ SELECT OBJECT_NAME(ps.object_id) AS table_name
       NULL, 
       'DETAILED')  AS ps
   JOIN sys.indexes AS i  ON ps.object_id = i.object_id
-						AND ps.index_id  = i.index_id
+			AND ps.index_id  = i.index_id
   WHERE index_level = 0;
 
 -------------------------------------------
 --INDEX REBUILD
---INDEX FragementÀÇ °æ¿ì DISK¿¡ PageµéÀÌ ¿¬¼ÓÀûÀ¸·Î À§Ä¡ÇÏÁö ¾Ê°í Èğ¾îÁ® ÀÖ´Â Çö»ó
---ÃÊ±â PageÀÇ °æ¿ì¿¡´Â ¿¬¼ÓÀûÀ¸·Î À§Ä¡ (INSERT,UPDATE,DELETE)µîÀÇ µ¥ÀÌÅÍ ÀÛ¾÷À¸·Î ÀÎÇØ Page À§Ä¡°¡ ºñ ¿¬¼ÓÀûÀ¸·Î À§Ä¡ÇÏ¿©
---INDEX¸¦ Àç±¸¼º ¸ñÀû
+--INDEX Fragementì˜ ê²½ìš° DISKì— Pageë“¤ì´ ì—°ì†ì ìœ¼ë¡œ ìœ„ì¹˜í•˜ì§€ ì•Šê³  í©ì–´ì ¸ ìˆëŠ” í˜„ìƒ
+--ì´ˆê¸° Pageì˜ ê²½ìš°ì—ëŠ” ì—°ì†ì ìœ¼ë¡œ ìœ„ì¹˜ (INSERT,UPDATE,DELETE)ë“±ì˜ ë°ì´í„° ì‘ì—…ìœ¼ë¡œ ì¸í•´ Page ìœ„ì¹˜ê°€ ë¹„ ì—°ì†ì ìœ¼ë¡œ ìœ„ì¹˜í•˜ì—¬
+--INDEXë¥¼ ì¬êµ¬ì„± ëª©ì 
 -------------------------------------------
 ALTER INDEX ALL ON TBLLowFragmentation REBUILD
 
 
---Å×ÀÌºí ºñ±³(±âº»Å×ÀÌºí : TBLLowFragmentation, ÀÎµ¦½º Àç±¸¼º : TBLHighFrgmentation)
+--í…Œì´ë¸” ë¹„êµ(ê¸°ë³¸í…Œì´ë¸” : TBLLowFragmentation, ì¸ë±ìŠ¤ ì¬êµ¬ì„± : TBLHighFrgmentation)
 SELECT LastName, COUNT(*)
   FROM TBLLowFragmentation
   GROUP BY LastName;
@@ -100,13 +100,13 @@ SELECT LastName, COUNT(*)
   GROUP BY LastName;
   GO
 
---ÀÎµ¦½º Á¶°¢È­ Á¤º¸ Ç¥½Ã
+--ì¸ë±ìŠ¤ ì¡°ê°í™” ì •ë³´ í‘œì‹œ
 DBCC SHOWCONTIG(TBLLowFragmentation, IDX_TBLLowFragmentation)
 
 
---ÀÎµ¦½º ³»¿ÜºÎ Á¶°¢È­ ºñ±³(¿ÜºÎÁ¶°¢È­(5 ~ 30% : REORGANIZE ÃßÃµ, 30% ÀÌ»ó : REBUILDÃßÃµ)
+--ì¸ë±ìŠ¤ ë‚´ì™¸ë¶€ ì¡°ê°í™” ë¹„êµ(ì™¸ë¶€ì¡°ê°í™”(5 ~ 30% : REORGANIZE ì¶”ì²œ, 30% ì´ìƒ : REBUILDì¶”ì²œ)
 SELECT OBJECT_NAME(ps.object_id)		AS table_name
-      ,i.name							AS index_name
+      ,i.name					AS index_name
       ,ps.index_id
       ,ps.index_depth	
       ,avg_fragmentation_in_percent		AS OuterFragmentation
@@ -122,8 +122,8 @@ SELECT OBJECT_NAME(ps.object_id)		AS table_name
       NULL, 
       'DETAILED')  AS ps
   JOIN sys.indexes AS i  ON ps.object_id = i.object_id
-						AND ps.index_id  = i.index_id
+			AND ps.index_id  = i.index_id
   WHERE index_level = 0;
 
---ÀÎµ¦½º REORGANIZE
+--ì¸ë±ìŠ¤ REORGANIZE
 ALTER INDEX IDX_TBLLowFragmentation ON  TBLLowFragmentation REORGANIZE WITH( LOB_COMPACTION = ON)
