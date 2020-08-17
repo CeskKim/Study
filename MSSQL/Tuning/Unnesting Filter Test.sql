@@ -2,7 +2,7 @@ USE TestDB
 GO
 
 /*************************************************************************************************
- ≈◊¿Ã∫Ì ª˝º∫ π◊ ¿Œµ¶Ω∫ ª˝º∫ Example1
+ ÌÖåÏù¥Î∏î ÏÉùÏÑ± Î∞è Ïù∏Îç±Ïä§ ÏÉùÏÑ± Example1
 **************************************************************************************************/
 
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLUnnest') AND Xtype = 'U')
@@ -11,7 +11,7 @@ BEGIN
 	CREATE TABLE TBLUnnest
 	(
 		RegSeq	INT	 IDENTITY(1,1)	,
-		RegDate	NCHAR(8)			,
+		RegDate	NCHAR(8)		,
 		CONSTRAINT  PK_TBLUnnest PRIMARY KEY(RegSeq)		
 	)
 END
@@ -21,12 +21,12 @@ BEGIN
 	CREATE NONCLUSTERED INDEX IDX_TBLUnnest ON TBLUnnest(RegDate)
 END
 /*************************************************************************************************
- µ•¿Ã≈Õ ª¿‘ Example1
+ Îç∞Ïù¥ÌÑ∞ ÏÇΩÏûÖ Example1
 **************************************************************************************************/
 DECLARE @FirstDate	NCHAR(8),
-		@CurrDate	NCHAR(8)
+	@CurrDate	NCHAR(8)
 SELECT @FirstDate = CONVERT(NCHAR(8),DATEADD(YY, DATEDIFF(YY, 0, GETDATE()),0),112),
-	    @CurrDate = CONVERT(NCHAR(8),GETDATE(),112)
+       @CurrDate = CONVERT(NCHAR(8),GETDATE(),112)
 
 INSERT INTO TBLUnnest(RegDate)
 SELECT CONVERT(NCHAR(8), DATEADD(D,number,@FirstDate),112)
@@ -34,24 +34,24 @@ SELECT CONVERT(NCHAR(8), DATEADD(D,number,@FirstDate),112)
  WHERE type = 'P'
    AND number <= DATEDIFF(D, @FirstDate, @CurrDate)
    AND NOT EXISTS(SELECT 1
-				    FROM TBLUnnest
-				   WHERE CONVERT(NCHAR(8), DATEADD(D,number,@FirstDate),112) = RegDate)
+		    FROM TBLUnnest
+		   WHERE CONVERT(NCHAR(8), DATEADD(D,number,@FirstDate),112) = RegDate)
 
 /*************************************************************************************************
- ∞·∞˙ : Unnest«¸≈¬ Example1
+ Í≤∞Í≥º : UnnestÌòïÌÉú Example1
 **************************************************************************************************/
 SELECT RegSeq, RegDate
   FROM ( SELECT *
            FROM ( SELECT *
-					FROM ( SELECT *
-					       FROM TBLUnnest
-					       WHERE RegDate >= '20200101' ) AS D1
-					WHERE RegDate >= '20200201' ) AS D2
-		  WHERE RegDate >= '20200301' ) AS D3
+		   FROM ( SELECT *
+		           FROM TBLUnnest
+		          WHERE RegDate >= '20200101' ) AS D1
+		  WHERE RegDate >= '20200201' ) AS D2
+	  WHERE RegDate >= '20200301' ) AS D3
  WHERE RegDate >= '20200401'
 
  /*************************************************************************************************
- ∞·∞˙ :TOP¿ª ≈Î«— Filter «¸≈¬(Unnest ¡¶∞≈) Example2
+ Í≤∞Í≥º :TOPÏùÑ ÌÜµÌïú Filter ÌòïÌÉú(Unnest Ï†úÍ±∞) Example2
 **************************************************************************************************/
 
 SELECT RegSeq, RegDate
@@ -68,7 +68,7 @@ SELECT RegSeq, RegDate
  -----------------------------------------------------------------------------------------------------
  -----------------------------------------------------------------------------------------------------
  /*************************************************************************************************
- ≈◊¿Ã∫Ì ª˝º∫ π◊ ¿Œµ¶Ω∫ ª˝º∫ Example12
+ ÌÖåÏù¥Î∏î ÏÉùÏÑ± Î∞è Ïù∏Îç±Ïä§ ÏÉùÏÑ± Example12
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLUnnestDetail') AND Xtype = 'U')
 BEGIN
@@ -83,12 +83,12 @@ BEGIN
 END
 
 /*************************************************************************************************
- µ•¿Ã≈Õ ª¿‘ Example2
+ Îç∞Ïù¥ÌÑ∞ ÏÇΩÏûÖ Example2
 **************************************************************************************************/
-DECLARE @FNum		INT			,
-		@ENum		INT			
-SELECT @FNum = 1	,
-	   @ENum = 100
+DECLARE @FNum	INT,
+	@ENum	INT			
+SELECT @FNum = 1,
+       @ENum = 100
 
 WHILE @FNum <= @ENum
 BEGIN
@@ -99,26 +99,26 @@ BEGIN
 END
 
 /*************************************************************************************************
- ∞·∞˙ : Unnest«¸≈¬ Example2
+ Í≤∞Í≥º : UnnestÌòïÌÉú Example2
 **************************************************************************************************/
 SELECT RegSeq,ProudctID,Discount
   FROM (
-		 SELECT *
-		   FROM TBLUnnestDetail
-		  WHERE Discount > (SELECT MIN(Discount) FROM TBLUnnestDetail)) AS A
+	SELECT *
+	  FROM TBLUnnestDetail
+	 WHERE Discount > (SELECT MIN(Discount) FROM TBLUnnestDetail)) AS A
 WHERE 1.0 / A.Discount > 10
 
  /*************************************************************************************************
- ∞·∞˙ :TOP¿ª ≈Î«— Filter «¸≈¬(Unnest ¡¶∞≈) Example2
+ Í≤∞Í≥º :TOPÏùÑ ÌÜµÌïú Filter ÌòïÌÉú(Unnest Ï†úÍ±∞) Example2
 **************************************************************************************************/
 SELECT RegSeq,ProudctID,Discount
   FROM (
-		 SELECT TOP (9223372036854775807) *
-		   FROM TBLUnnestDetail
-		  WHERE Discount > (SELECT MIN(Discount) FROM TBLUnnestDetail)) AS A
+	 SELECT TOP (9223372036854775807) *
+	   FROM TBLUnnestDetail
+	   WHERE Discount > (SELECT MIN(Discount) FROM TBLUnnestDetail)) AS A
 WHERE 1.0 / A.Discount > 10
 
 
 /*************************************************************************************************
- ¬¸¡∂ªÁ¿Ã∆Æ :https://sqlperformance.com/2020/07/t-sql-queries/table-expressions-part-4
+ Ï∞∏Ï°∞ÏÇ¨Ïù¥Ìä∏ :https://sqlperformance.com/2020/07/t-sql-queries/table-expressions-part-4
 **************************************************************************************************/
