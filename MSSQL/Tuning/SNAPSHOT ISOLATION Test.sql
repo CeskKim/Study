@@ -1,17 +1,17 @@
 USE TestDB
 GO
 /*************************************************************************************************
- RCSI(READ COMMITTED SNAPSHOT ISOLATION) »ç¿ë
- 1.ALTER DATABASE TestDB SET READ_COMMITTED_SNAPSHOT ON; :ÁøÇà ½Ã ¸¹Àº ½Ã°£ °æ°ú
- 2.WITH ROLLBACK IMMEDIATE Ãß°¡ : Æ®·£Àè¼Ç ¹ß»ý½Ã ¸ðµÎ ·Ñ¹é -> ALTER DATABASE »ç¿ë½Ã ¸ðµç Æ®·£Àè¼Ç COMMITT ¶Ç´Â ROLLBACK ÀÌ µÇ¾ß ½ÇÇà 
-  ±×·¯¹Ç·Î ¸¹Àº Æ®·£Àè¼Ç ¹ß»ý ÇÔÀ¸·Î ÇØ´ç ±¸¹® »ç¿ë
+ RCSI(READ COMMITTED SNAPSHOT ISOLATION) ì‚¬ìš©
+ 1.ALTER DATABASE TestDB SET READ_COMMITTED_SNAPSHOT ON; :ì§„í–‰ ì‹œ ë§Žì€ ì‹œê°„ ê²½ê³¼
+ 2.WITH ROLLBACK IMMEDIATE ì¶”ê°€ : íŠ¸ëžœìž­ì…˜ ë°œìƒì‹œ ëª¨ë‘ ë¡¤ë°± -> ALTER DATABASE ì‚¬ìš©ì‹œ ëª¨ë“  íŠ¸ëžœìž­ì…˜ COMMITT ë˜ëŠ” ROLLBACK ì´ ë˜ì•¼ ì‹¤í–‰ 
+  ê·¸ëŸ¬ë¯€ë¡œ ë§Žì€ íŠ¸ëžœìž­ì…˜ ë°œìƒ í•¨ìœ¼ë¡œ í•´ë‹¹ êµ¬ë¬¸ ì‚¬ìš©
 **************************************************************************************************/
 ALTER DATABASE TestDB SET READ_COMMITTED_SNAPSHOT ON WITH ROLLBACK IMMEDIATE;
 
 GO
 
---SNAPSHOT È®ÀÎ
-SELECT DB_NAME(database_id)				,
+--SNAPSHOT í™•ì¸
+SELECT DB_NAME(database_id)			,
 	   is_read_committed_snapshot_on	,
 	   snapshot_isolation_state_desc
   FROM sys.databases
@@ -22,7 +22,7 @@ SELECT DB_NAME(database_id)				,
 
 
  /*************************************************************************************************
- SERIALIZABLE »ç¿ëÀÓ¿¡µµ ºÒ±¸ÇÏ°í READ_COMMITTED_SNAPSHOT »ç¿ëÀÌ °¡´ÉÇÑ »óÅÂ·Î ÀÐ±â °¡´É
+ SERIALIZABLE ì‚¬ìš©ìž„ì—ë„ ë¶ˆêµ¬í•˜ê³  READ_COMMITTED_SNAPSHOT ì‚¬ìš©ì´ ê°€ëŠ¥í•œ ìƒíƒœë¡œ ì½ê¸° ê°€ëŠ¥
 **************************************************************************************************/
 BEGIN TRAN
 SET TRANSACTION ISOLATION LEVEL READ COMMITTED
@@ -40,20 +40,20 @@ SELECT *
 
 
  /*************************************************************************************************
-  UPDATE Ãæµ¹ ¹®Á¦ PART1
-  1.¹Ì¸® ¾÷µ¥ÀÌÆ®°¡ ÁøÇàµÇ°í ÀÖ´Â ÇàÀÇ Ä¿¹ÔµÇ±â Àü ´Ù¸¥ ¼¼¼Ç¿¡¼­ ÁøÇà ½Ã ¾Æ·¡¿Í °°Àº ¿À·ù ¹ß»ý
-   -> ¸Þ½ÃÁö 3951, ¼öÁØ 16, »óÅÂ 1, ÁÙ 69
-      ¹®ÀÌ ½º³À¼¦ °Ý¸®ÇÏ¿¡ ½ÇÇàµÇ¾úÁö¸¸ Æ®·£Àè¼ÇÀÌ ½º³À¼¦ °Ý¸®¿¡¼­ ½ÃÀÛµÇÁö ¾Ê¾ÒÀ¸¹Ç·Î µ¥ÀÌÅÍº£ÀÌ½º 'TestDB'¿¡¼­ ÇØ´ç Æ®·£Àè¼ÇÀÌ ½ÇÆÐÇß½À´Ï´Ù. 
-      Æ®·£Àè¼ÇÀÌ ¿ø·¡ ½º³À¼¦ °Ý¸® ¼öÁØ¿¡¼­ ½ÃÀÛµÇÁö ¾ÊÀº ÇÑ Æ®·£Àè¼ÇÀÌ ½ÃÀÛµÈ ÈÄ¿¡ Æ®·£Àè¼ÇÀÇ °Ý¸® ¼öÁØÀ» ½º³À¼¦À¸·Î º¯°æÇÒ ¼ö ¾ø½À´Ï´Ù.
+  UPDATE ì¶©ëŒ ë¬¸ì œ PART1
+  1.ë¯¸ë¦¬ ì—…ë°ì´íŠ¸ê°€ ì§„í–‰ë˜ê³  ìžˆëŠ” í–‰ì˜ ì»¤ë°‹ë˜ê¸° ì „ ë‹¤ë¥¸ ì„¸ì…˜ì—ì„œ ì§„í–‰ ì‹œ ì•„ëž˜ì™€ ê°™ì€ ì˜¤ë¥˜ ë°œìƒ
+   -> ë©”ì‹œì§€ 3951, ìˆ˜ì¤€ 16, ìƒíƒœ 1, ì¤„ 69
+      ë¬¸ì´ ìŠ¤ëƒ…ìƒ· ê²©ë¦¬í•˜ì— ì‹¤í–‰ë˜ì—ˆì§€ë§Œ íŠ¸ëžœìž­ì…˜ì´ ìŠ¤ëƒ…ìƒ· ê²©ë¦¬ì—ì„œ ì‹œìž‘ë˜ì§€ ì•Šì•˜ìœ¼ë¯€ë¡œ ë°ì´í„°ë² ì´ìŠ¤ 'TestDB'ì—ì„œ í•´ë‹¹ íŠ¸ëžœìž­ì…˜ì´ ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. 
+      íŠ¸ëžœìž­ì…˜ì´ ì›ëž˜ ìŠ¤ëƒ…ìƒ· ê²©ë¦¬ ìˆ˜ì¤€ì—ì„œ ì‹œìž‘ë˜ì§€ ì•Šì€ í•œ íŠ¸ëžœìž­ì…˜ì´ ì‹œìž‘ëœ í›„ì— íŠ¸ëžœìž­ì…˜ì˜ ê²©ë¦¬ ìˆ˜ì¤€ì„ ìŠ¤ëƒ…ìƒ·ìœ¼ë¡œ ë³€ê²½í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLConflict') AND xtype = 'U')
 BEGIN
 	CREATE TABLE TBLConflict
 	(
 		ID1    INT UNIQUE NOT NULL	,
-		Value1 INT		  NOT NULL	,
-		ID2	   INT UNIQUE NOT NULL	,
-		Value2 INT		  NOT NULL
+		Value1 INT	  NOT NULL	,
+		ID2    INT UNIQUE NOT NULL	,
+		Value2 INT	  NOT NULL
 	)
 END
 -- Insert one row
@@ -79,8 +79,8 @@ UPDATE TBLConflict
 
 
   /*************************************************************************************************
-  UPDATE Ãæµ¹ ¹®Á¦ PART2
-  1.¿ÜºÎÅ° °ü·Ã ¹®Á¦Á¡
+  UPDATE ì¶©ëŒ ë¬¸ì œ PART2
+  1.ì™¸ë¶€í‚¤ ê´€ë ¨ ë¬¸ì œì 
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLDummy') AND xtype = 'U')
 BEGIN
@@ -106,8 +106,8 @@ BEGIN
 	CREATE TABLE TBLChild
 	(
 		ChildID		INT PRIMARY KEY,
-        ChildValue	INT NOT NULL   ,
-        ParentID	INT NULL FOREIGN KEY REFERENCES TBLParent
+        	ChildValue	INT NOT NULL   ,
+        	ParentID	INT NULL FOREIGN KEY REFERENCES TBLParent
 	)
 END
 
@@ -135,7 +135,7 @@ UPDATE TBLChild SET ParentID = 1 WHERE ChildID = 1
 
 
  /*************************************************************************************************
- TRUNCATE »èÁ¦ ¹®Á¦Á¡
+ TRUNCATE ì‚­ì œ ë¬¸ì œì 
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLAccess') AND xtype = 'U')
 BEGIN
@@ -165,7 +165,7 @@ TRUNCATE TABLE TBLTruncate
 SELECT COUNT_BIG(*) FROM TBLTruncate
 
 /*************************************************************************************************
- ÂüÁ¶»çÀÌÆ® 
+ ì°¸ì¡°ì‚¬ì´íŠ¸ 
  https://sqlperformance.com/2020/07/t-sql-queries/table-expressions-part-4
  https://www.sqlshack.com/snapshot-isolation-in-sql-server/
 **************************************************************************************************/
