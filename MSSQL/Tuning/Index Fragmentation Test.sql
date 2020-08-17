@@ -109,8 +109,8 @@ SELECT OBJECT_NAME(ps.object_id)		AS table_name
       ,i.name					AS index_name
       ,ps.index_id
       ,ps.index_depth	
-      ,avg_fragmentation_in_percent		AS OuterFragmentation
-	  ,avg_page_space_used_in_percent	AS InnerFragmentation
+      ,avg_fragmentation_in_percent     AS OuterFragmentation
+      ,avg_page_space_used_in_percent	AS InnerFragmentation
       ,fragment_count					
       ,page_count						
       ,avg_page_space_used_in_percent
