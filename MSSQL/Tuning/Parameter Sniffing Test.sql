@@ -1,7 +1,7 @@
 USE ExampleDB
 GO
 /*************************************************************************************************
- ÇÁ·Î½ÃÀú »ı¼º
+ í”„ë¡œì‹œì € ìƒì„±
 **************************************************************************************************/
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('_SPAddressLineQuery') AND Xtype = 'P')
 DROP PROC _SPAddressLineQuery
@@ -14,54 +14,53 @@ AS
 	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
 	SELECT A.AddressID
-		  ,A.AddressLine1
-		  ,A.AddressLine2
-		  ,A.City
-		  ,B.Name AS StateProvinceName
-
-	  FROM Person.Address		AS A
+	      ,A.AddressLine1
+	      ,A.AddressLine2
+	      ,A.City
+	      ,B.Name AS StateProvinceName
+	  FROM Person.Address	    AS A
 	  JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
      WHERE A.City = @City
 GO
 /*************************************************************************************************
- ÇÁ·Î½ÃÀú ½ÇÇà
- 1.½ÇÇà°èÈ¹ SELECT¹® ¿ì Å¬¸¯ -> ¸Å°³º¯¼ö¸ñ·Ï : @City(¿ÉÆ¼¸¶ÀÌÀú°¡ Paris¸¦ ÀÚµ¿À¸·Î @City)·Î ¸Å°³º¯¼ö
+ í”„ë¡œì‹œì € ì‹¤í–‰
+ 1.ì‹¤í–‰ê³„íš SELECTë¬¸ ìš° í´ë¦­ -> ë§¤ê°œë³€ìˆ˜ëª©ë¡ : @City(ì˜µí‹°ë§ˆì´ì €ê°€ Parisë¥¼ ìë™ìœ¼ë¡œ @City)ë¡œ ë§¤ê°œë³€ìˆ˜
   => Parameter Sniffing
 **************************************************************************************************/
 SET STATISTICS IO ON
 EXEC _SPAddressLineQuery 'Paris'
 
 /*************************************************************************************************
- ÇÃ·£ Ä³½¬ È®ÀÎ
- 1.sys.dm_exec_cached_plansÀ» ÅëÇØ È®ÀÎ (ÇÁ·Î½ÃÀú ½ÇÇà½Ã ÇÃ·£ Ä³½¬¸¦ ÀĞ¾î ÀçÈ°¿ë)
- 2.¼­·Î »óÀÌÇÑ ¸Å°³º¯¼ö °ªÀ» ÅëÇØ ÇÁ·Î½ÃÀú ½ÇÇà -> µ¿ÀÏÇÑ ½ÇÇà °èÈ¹ Ç¥½Ã -> SET STATISTICS IO ON »ç¿ë °á°ú : ³í¸®ÀûÀĞ±â Â÷ÀÌ 
-   =>±âÁ¸¿¡ ÇÃ·£ Ä³½¬¿¡ ÀúÀåµÈ ½ÇÇà °èÈ¹ »ç¿ë È®ÀÎ 
+ í”Œëœ ìºì‰¬ í™•ì¸
+ 1.sys.dm_exec_cached_plansì„ í†µí•´ í™•ì¸ (í”„ë¡œì‹œì € ì‹¤í–‰ì‹œ í”Œëœ ìºì‰¬ë¥¼ ì½ì–´ ì¬í™œìš©)
+ 2.ì„œë¡œ ìƒì´í•œ ë§¤ê°œë³€ìˆ˜ ê°’ì„ í†µí•´ í”„ë¡œì‹œì € ì‹¤í–‰ -> ë™ì¼í•œ ì‹¤í–‰ ê³„íš í‘œì‹œ -> SET STATISTICS IO ON ì‚¬ìš© ê²°ê³¼ : ë…¼ë¦¬ì ì½ê¸° ì°¨ì´ 
+   =>ê¸°ì¡´ì— í”Œëœ ìºì‰¬ì— ì €ì¥ëœ ì‹¤í–‰ ê³„íš ì‚¬ìš© í™•ì¸ 
 **************************************************************************************************/
 EXEC _SPAddressLineQuery 'Gilbert'
 EXEC _SPAddressLineQuery 'Paris'
 
-SELECT CP.objtype 
-	  ,CP.cacheobjtype
-	  ,CP.size_in_bytes
-	  ,CP.refcounts, cp.usecounts
-	  ,ST.text
-  FROM sys.dm_exec_cached_plans					   AS CP
+ SELECT CP.objtype 
+       ,CP.cacheobjtype
+       ,CP.size_in_bytes
+       ,CP.refcounts, cp.usecounts
+       ,ST.text
+  FROM sys.dm_exec_cached_plans			   AS CP
   CROSS APPLY sys.dm_exec_sql_text(cp.plan_handle) AS ST
  WHERE CP.objtype = 'Proc'
 
 
  /*************************************************************************************************
-  SELECT¹® »ç¿ë(ÇÁ·Î½ÃÀú X)
-  1.SET STATISTICS IO ON »ç¿ë °á°ú : ³í¸®ÀûÀĞ±â Â÷ÀÌ 
-    => SQL Server ÄÄÆÄÀÏ ½ÃÁ¡ °ª Àü´Ş X Áï SQL ServerÀÇ °æ¿ì CBO¹æ½ÄÀ¸·Î Åë°è°ª »ç¿ë
+  SELECTë¬¸ ì‚¬ìš©(í”„ë¡œì‹œì € X)
+  1.SET STATISTICS IO ON ì‚¬ìš© ê²°ê³¼ : ë…¼ë¦¬ì ì½ê¸° ì°¨ì´ 
+    => SQL Server ì»´íŒŒì¼ ì‹œì  ê°’ ì „ë‹¬ X ì¦‰ SQL Serverì˜ ê²½ìš° CBOë°©ì‹ìœ¼ë¡œ í†µê³„ê°’ ì‚¬ìš©
 **************************************************************************************************/
  DECLARE @City NVARCHAR(30)
  SELECT A.AddressID
-	   ,A.AddressLine1
-	   ,A.AddressLine2
-	   ,A.City
-	   ,B.Name AS StateProvinceName
-  FROM Person.Address		AS A
+       ,A.AddressLine1
+       ,A.AddressLine2
+       ,A.City
+       ,B.Name AS StateProvinceName
+  FROM Person.Address	    AS A
   JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
  WHERE A.City = 'Paris'
 
