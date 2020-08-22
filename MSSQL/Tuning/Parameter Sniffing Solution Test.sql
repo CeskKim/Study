@@ -1,3 +1,4 @@
+--adventureworks 예제 파일 사용
 USE ExampleDB 
 GO
 DBCC freeproccache --캐쉬 초기화
