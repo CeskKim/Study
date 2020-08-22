@@ -1,12 +1,12 @@
 USE ExampleDB 
 GO
-DBCC freeproccache --ƒ≥Ω¨ √ ±‚»≠
+DBCC freeproccache --Ï∫êÏâ¨ Ï¥àÍ∏∞Ìôî
 SET STATISTICS IO ON 
  
  /*************************************************************************************************
- 1.Parameter Sniffing «ÿ∞·πÊæ» : OPTIMIZE FOR
-   => ∏≈∞≥∫Øºˆø° ¡ˆ¡§µ» ≥ªø™¿« Ω««‡∞Ë»π∏∏ ªÁøÎ
-   => ¡ˆ¡§µ» ∏≈∞≥∫Øºˆø° ¥Î«— Ω««‡∞Ë»π ªÁøÎ¿Ãπ«∑Œ ∏Ì»Æ«— ≥ªø™¿Œ ∞ÊøÏø°∏∏ ªÁøÎ
+ 1.Parameter Sniffing Ìï¥Í≤∞Î∞©Ïïà : OPTIMIZE FOR
+   => Îß§Í∞úÎ≥ÄÏàòÏóê ÏßÄÏ†ïÎêú ÎÇ¥Ïó≠Ïùò Ïã§ÌñâÍ≥ÑÌöçÎßå ÏÇ¨Ïö©
+   => ÏßÄÏ†ïÎêú Îß§Í∞úÎ≥ÄÏàòÏóê ÎåÄÌïú Ïã§ÌñâÍ≥ÑÌöç ÏÇ¨Ïö©Ïù¥ÎØÄÎ°ú Î™ÖÌôïÌïú ÎÇ¥Ïó≠Ïù∏ Í≤ΩÏö∞ÏóêÎßå ÏÇ¨Ïö©
 **************************************************************************************************/
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('_SPAddressLineQuery') AND Xtype = 'P')
 DROP PROC _SPAddressLineQuery
@@ -19,27 +19,26 @@ AS
 	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
 	SELECT A.AddressID
-		  ,A.AddressLine1
-		  ,A.AddressLine2
-		  ,A.City
-		  ,B.Name AS StateProvinceName
-
-	  FROM Person.Address		AS A
+	      ,A.AddressLine1
+	      ,A.AddressLine2
+	      ,A.City
+	      ,B.Name AS StateProvinceName
+	  FROM Person.Address	    AS A
 	  JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
-     WHERE A.City = @City
+         WHERE A.City = @City
 	 OPTION (OPTIMIZE FOR (@City = 'Milwaukie'))
 GO
 EXEC _SPAddressLineQuery 'Paris'
  /*************************************************************************************************
- 2.Parameter Sniffing «ÿ∞·πÊæ» : WITH(RECOMPILE)
-   => «√∑£ ƒ≥Ω¨∏¶ »∞øÎ«œ¡ˆ æ ∞Ì «¡∑ŒΩ√¿˙∞° Ω««‡µ…∂ß ªı∑ŒøÓ Ω««‡∞Ë»πª˝º∫(Parsing -> ±∏πÆ∫–ºÆ -> ±∏πÆ√÷¿˚»≠)
-   £™Ω««‡∞Ë»πª˝º∫ ∞˙¡§ (Parsing -> DML -> NO ->Algebrizing
-                                       -> YES -> Algebrizing-> Optimizing ->Execution)
+ 2.Parameter Sniffing Ìï¥Í≤∞Î∞©Ïïà : WITH(RECOMPILE)
+   => ÌîåÎûú Ï∫êÏâ¨Î•º ÌôúÏö©ÌïòÏßÄ ÏïäÍ≥† ÌîÑÎ°úÏãúÏ†ÄÍ∞Ä Ïã§ÌñâÎê†Îïå ÏÉàÎ°úÏö¥ Ïã§ÌñâÍ≥ÑÌöçÏÉùÏÑ±(Parsing -> Íµ¨Î¨∏Î∂ÑÏÑù -> Íµ¨Î¨∏ÏµúÏ†ÅÌôî)
+   ÔºäÏã§ÌñâÍ≥ÑÌöçÏÉùÏÑ± Í≥ºÏ†ï (Parsing -> DML -> NO -> Algebrizing
+                                      -> YES -> Algebrizing-> Optimizing ->Execution)
 						Optimizing -> Is a valid plan cached -> YES -> Execution
-                                                                    -> NO -> Apply simplification -> Is this a trival plan -> YES -> Execution
+											    -> NO -> Apply simplification -> Is this a trival plan -> YES -> Execution
 																																  -> NO -> Is the plan cheap enough -> YES -> Execution
 																																								-> NO -> Start cost  - based optimization -> Execution
-    => ¿ßøÕ ∞∞¿∫ Ω««‡∞Ë»π¿ª ªı∑”∞‘ ª˝º∫ -> «¡∑ŒΩ√¿˙ø°º≠¥¬ ∫ÒøÎ¿Ã ∏π¿Ã º“∏ -> ∫Ûπ¯«œ∞‘ ªÁøÎµ«¥¬ «¡∑ŒΩ√¿˙ø°º≠¥¬ ∫Ò √ﬂ√µ
+    => ÏúÑÏôÄ Í∞ôÏùÄ Ïã§ÌñâÍ≥ÑÌöçÏùÑ ÏÉàÎ°≠Í≤å ÏÉùÏÑ± -> ÌîÑÎ°úÏãúÏ†ÄÏóêÏÑúÎäî ÎπÑÏö©Ïù¥ ÎßéÏù¥ ÏÜåÎ™® -> ÎπàÎ≤àÌïòÍ≤å ÏÇ¨Ïö©ÎêòÎäî ÌîÑÎ°úÏãúÏ†ÄÏóêÏÑúÎäî ÎπÑ Ï∂îÏ≤ú
 **************************************************************************************************/
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('_SPAddressLineQuery') AND Xtype = 'P')
 DROP PROC _SPAddressLineQuery
@@ -52,24 +51,23 @@ AS
 	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
 	SELECT A.AddressID
-		  ,A.AddressLine1
-		  ,A.AddressLine2
-		  ,A.City
-		  ,B.Name AS StateProvinceName
-
-	  FROM Person.Address		AS A
+	      ,A.AddressLine1
+	      ,A.AddressLine2
+	      ,A.City
+	      ,B.Name AS StateProvinceName
+	  FROM Person.Address       AS A
 	  JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
-     WHERE A.City = @City
+         WHERE A.City = @City
 	 OPTION (RECOMPILE)
 
 GO
 EXEC _SPAddressLineQuery 'Paris'
 
  /*************************************************************************************************
- 3.Parameter Sniffing «ÿ∞·πÊæ» : Dynamic SQL ªÁøÎ
-   => ∏≈∞≥∫Øºˆ∞° ∫Ø∞Êµ«¡ˆ æ ¿∫ ∞ÊøÏ ªı∑”∞‘ Ω««‡∞Ë»π¿ª ª˝º∫«œ¡ˆ æ ¿Ω
-   => ∞°µ∂º∫¿Ã ¡¡¡ˆ æ ¿Ω, ∏≈∞≥∫Øºˆ∞° ∫Ø∞Ê¿Ã ∫Ûπ¯«— ∞ÊøÏ RECOPILE∞˙ ∞∞¿Ã Ω««‡∞Ë»π¿ª ªı∑”∞‘ ª˝º∫ -> «¡∑ŒΩ√¿˙ø°º≠¥¬ ∫ÒøÎ¿Ã ∏π¿Ã º“∏ -> ∫Ûπ¯«œ∞‘ ªÁøÎµ«¥¬ «¡∑ŒΩ√¿˙ø°º≠¥¬ ∫Ò √ﬂ√µ
-   => ¥Î∞˝»£, ±‚»£, ∆ØºˆπÆ¿⁄∞° ∫Ø∞Êµ«∞≈≥™ ºˆ¡§µ«¡ˆ æ µµ∑œ «ÿæﬂ«‘
+ 3.Parameter Sniffing Ìï¥Í≤∞Î∞©Ïïà : Dynamic SQL ÏÇ¨Ïö©
+   => Îß§Í∞úÎ≥ÄÏàòÍ∞Ä Î≥ÄÍ≤ΩÎêòÏßÄ ÏïäÏùÄ Í≤ΩÏö∞ ÏÉàÎ°≠Í≤å Ïã§ÌñâÍ≥ÑÌöçÏùÑ ÏÉùÏÑ±ÌïòÏßÄ ÏïäÏùå
+   => Í∞ÄÎèÖÏÑ±Ïù¥ Ï¢ãÏßÄ ÏïäÏùå, Îß§Í∞úÎ≥ÄÏàòÍ∞Ä Î≥ÄÍ≤ΩÏù¥ ÎπàÎ≤àÌïú Í≤ΩÏö∞ RECOPILEÍ≥º Í∞ôÏù¥ Ïã§ÌñâÍ≥ÑÌöçÏùÑ ÏÉàÎ°≠Í≤å ÏÉùÏÑ± -> ÌîÑÎ°úÏãúÏ†ÄÏóêÏÑúÎäî ÎπÑÏö©Ïù¥ ÎßéÏù¥ ÏÜåÎ™® -> ÎπàÎ≤àÌïòÍ≤å ÏÇ¨Ïö©ÎêòÎäî ÌîÑÎ°úÏãúÏ†ÄÏóêÏÑúÎäî ÎπÑ Ï∂îÏ≤ú
+   => ÎåÄÍ¥ÑÌò∏, Í∏∞Ìò∏, ÌäπÏàòÎ¨∏ÏûêÍ∞Ä Î≥ÄÍ≤ΩÎêòÍ±∞ÎÇò ÏàòÏ†ïÎêòÏßÄ ÏïäÎèÑÎ°ù Ìï¥ÏïºÌï®
 **************************************************************************************************/
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('_SPAddressLineQuery') AND Xtype = 'P')
 DROP PROC _SPAddressLineQuery
@@ -85,13 +83,13 @@ AS
 
 
 	SELECT @SQLCommand = 'SELECT A.AddressID
-						 ,A.AddressLine1	 
-						 ,A.AddressLine2
-						 ,A.City
-						 ,B.Name AS StateProvinceName
-						   FROM Person.Address		 AS A
-						   JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
-						  WHERE A.City = ''' + CAST(@City AS NVARCHAR(200)) + ''''
+			            ,A.AddressLine1	 
+			            ,A.AddressLine2
+			            ,A.City
+			            ,B.Name AS StateProvinceName
+			       FROM Person.Address	 AS A
+			       JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
+			       WHERE A.City = ''' + CAST(@City AS NVARCHAR(200)) + ''''
 			
 	 PRINT @SQLCommand
 	 EXEC sp_executesql @SQLCommand
@@ -99,8 +97,8 @@ GO
 EXEC _SPAddressLineQuery 'Paris'
 
  /*************************************************************************************************
- 4.Parameter Sniffing «ÿ∞·πÊæ» : Temporary «¡∑ŒΩ√¿˙ ªÁøÎ
-   => ªı∑Œ ¿˙¿Âµ» «¡∑ŒΩ√¿˙∏¶ πÃ∑Ø∏µ -> Ω««‡∞Ë»πø° ªÁøÎ«“ ∫“« ø‰«— ±‚∑œ ¡¶∞≈
+ 4.Parameter Sniffing Ìï¥Í≤∞Î∞©Ïïà : Temporary ÌîÑÎ°úÏãúÏ†Ä ÏÇ¨Ïö©
+   => ÏÉàÎ°ú Ï†ÄÏû•Îêú ÌîÑÎ°úÏãúÏ†ÄÎ•º ÎØ∏Îü¨ÎßÅ -> Ïã§ÌñâÍ≥ÑÌöçÏóê ÏÇ¨Ïö©Ìï† Î∂àÌïÑÏöîÌïú Í∏∞Î°ù Ï†úÍ±∞
 **************************************************************************************************/
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('#_SPAddressLineQuery') AND Xtype = 'P')
 DROP PROC #_SPAddressLineQuery
@@ -113,12 +111,11 @@ AS
 	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
 	SELECT A.AddressID
-		  ,A.AddressLine1
-		  ,A.AddressLine2
-		  ,A.City
-		  ,B.Name AS StateProvinceName
-
-	  FROM Person.Address		AS A
+	      ,A.AddressLine1
+	      ,A.AddressLine2
+	      ,A.City
+	      ,B.Name AS StateProvinceName
+	  FROM Person.Address	    AS A
 	  JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
      WHERE A.City = @City
 	 
@@ -129,6 +126,6 @@ GO
 DROP PROC #_SPAddressLineQuery
 
 /*************************************************************************************************
- ¬¸¡∂ªÁ¿Ã∆Æ 
+ Ï∞∏Ï°∞ÏÇ¨Ïù¥Ìä∏ 
  https://www.sqlshack.com/query-optimization-techniques-in-sql-server-parameter-sniffing/
 **************************************************************************************************/
