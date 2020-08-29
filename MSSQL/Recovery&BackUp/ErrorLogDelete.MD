@@ -9,4 +9,6 @@ ___
 
 ## 실행내역
 
+-sp_cycle_rrorlog 사용
 
+![LottoCrawlingSetInfra](./img/LottoCrawlingSetInfra.JPG)
