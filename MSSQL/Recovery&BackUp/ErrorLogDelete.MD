@@ -11,4 +11,4 @@ ___
 
 -sp_cycle_rrorlog 사용
 
-![LottoCrawlingSetInfra](./img/LottoCrawlingSetInfra.JPG)
+![errlogexec](./img/errlogexec.JPG)
