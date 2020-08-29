@@ -9,14 +9,17 @@ ___
 
 ## 실행내역
 - errorlog 파일 확인
+
 ![errorlogprev](./img/errorlogprev.JPG)
 ___
 
 - sp_cycle_rrorlog 사용
+
 ![errlogexec](./img/errlogexec.JPG)
 ___
 
 - errorlog 파일 확인 -> 기존내역 ERRORLOG.1로변경, 신규 ERRORLOG발생
+
 ![errorlognew](./img/errorlognew.JPG)
 ___
 
