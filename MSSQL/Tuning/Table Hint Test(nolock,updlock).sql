@@ -3,22 +3,21 @@ GO
 SET STATISTICS IO ON 
 SET NOCOUNT ON
 
- 
  /*************************************************************************************************
  1.TABLE Hint : WITH(NOLOCK)
-   => ÇØ´ç Å×ÀÌºí¿¡ WITH(NOLOCK), READ UNCOMMITTED TRANSACTION LEVEL°ú µ¿ÀÏ È¿°ú
+   => í•´ë‹¹ í…Œì´ë¸”ì— WITH(NOLOCK), READ UNCOMMITTED TRANSACTION LEVELê³¼ ë™ì¼ íš¨ê³¼
 ***************************************************************** *********************************/
 --Person.Address WITH(NOLOCK) 
 BEGIN TRAN
 UPDATE A
    SET City = N'Paris'
-  FROM Person.Address		AS A
+  FROM Person.Address	    AS A
   JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
  WHERE A.AddressID = 30 
 
 
  SELECT A.*
-   FROM Person.Address		 AS A WITH(NOLOCK)
+   FROM Person.Address	     AS A WITH(NOLOCK)
    JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
   WHERE A.AddressID = 30
 
@@ -26,29 +25,29 @@ UPDATE A
 BEGIN TRAN
 UPDATE B
    SET Name = N'Paris'
-  FROM Person.Address		AS A
+  FROM Person.Address	    AS A
   JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
  WHERE A.AddressID = 30 
 
- /*Person.StateProvince Exclusive lock »óÅÂ -> ¾Æ·¡ ±¸¹® ½ÇÇà ½Ã LOCK »óÅÂ
-   SP_LOCK, DBCC Inputbuffer(SPID) -> TAB,PAG,KEY : X, IX »óÅÂ È®ÀÎ °¡´É
+ /*Person.StateProvince Exclusive lock ìƒíƒœ -> ì•„ëž˜ êµ¬ë¬¸ ì‹¤í–‰ ì‹œ LOCK ìƒíƒœ
+   SP_LOCK, DBCC Inputbuffer(SPID) -> TAB,PAG,KEY : X, IX ìƒíƒœ í™•ì¸ ê°€ëŠ¥
  SELECT B.Name,A.*
-   FROM Person.Address		 AS A WITH(NOLOCK)
+   FROM Person.Address	     AS A WITH(NOLOCK)
    JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
   WHERE A.AddressID = 30
   */
 
 /*************************************************************************************************
  2.TABLE Hint : WITH(UPDLOCK)
-   => ÇØ´ç Å×ÀÌºí¿¡ WITH(UPDLOCK), SELECT -> UPDATE ´Ù¸¥¼¼¼Ç¿¡ ¿µÇâÀ» ¹ÞÁö ¾Ê°í ¼øÂ÷Àû ÁøÇà ½Ã ÁÖ·Î »ç¿ë
-   => WITH(UPDLOCK) -> UPDATE -> WITH(UPLOCK)ÇØÁ¦ SELECT
+   => í•´ë‹¹ í…Œì´ë¸”ì— WITH(UPDLOCK), SELECT -> UPDATE ë‹¤ë¥¸ì„¸ì…˜ì— ì˜í–¥ì„ ë°›ì§€ ì•Šê³  ìˆœì°¨ì  ì§„í–‰ ì‹œ ì£¼ë¡œ ì‚¬ìš©
+   => WITH(UPDLOCK) -> UPDATE -> WITH(UPLOCK)í•´ì œ SELECT
 ***************************************************************** *********************************/
 BEGIN TRAN
 SELECT @@SPID AS FirstTrasactionID 
 DECLARE @StateProvinceID INT
 
 SELECT @StateProvinceID = B.StateProvinceID
-   FROM Person.Address		 AS A 
+   FROM Person.Address	     AS A 
    JOIN Person.StateProvince AS B WITH(UPDLOCK) ON A.StateProvinceID = B.StateProvinceID
   WHERE A.AddressID = 30
 
@@ -56,14 +55,14 @@ SELECT @StateProvinceID = B.StateProvinceID
 
  
   SELECT B.Name,@StateProvinceID,A.*
-   FROM Person.Address		 AS A 
+   FROM Person.Address	     AS A 
    JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
   WHERE A.AddressID = 30
 
 
 UPDATE B
    SET Name = N'ToKyo'
-  FROM Person.Address		AS A
+  FROM Person.Address	    AS A
   JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
  WHERE A.AddressID = 30 
    AND B.StateProvinceID  = @StateProvinceID
@@ -76,7 +75,7 @@ UPDATE B
 	BEGIN TRAN
 
 	 SELECT B.Name,A.*
-	  FROM Person.Address		AS A 
+	  FROM Person.Address	    AS A 
 	  JOIN Person.StateProvince AS B ON A.StateProvinceID = B.StateProvinceID
 	 WHERE A.AddressID = 30
 
