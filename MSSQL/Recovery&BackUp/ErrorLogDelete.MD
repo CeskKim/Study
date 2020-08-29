@@ -25,3 +25,6 @@ ___
 
 ## 결론
 - ErrorLog의 용량이 커진 경우 sp_cycle_rrorlog을 이용하여 기존 errlog파일을 타 폴더에 백업 또는 삭제처리하여 C드라이브 용량 확보 가능
+
+## 참고사이트
+- https://docs.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-cycle-errorlog-transact-sql?view=sql-server-ver15
