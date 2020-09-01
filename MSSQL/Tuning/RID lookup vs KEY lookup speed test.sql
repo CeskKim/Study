@@ -1,19 +1,19 @@
 USE TestDB
 GO
 /*************************************************************************************************
- Å×ÀÌºí »ý¼º ¹× ÀÎµ¦½º »ý¼º 
+ í…Œì´ë¸” ìƒì„± ë° ì¸ë±ìŠ¤ ìƒì„± 
  1.TBLHeap : NONCLUSTERED
  2.TBLCIX  : CLUSTERED
- 3.TBLTime : ½Ã°£ÃøÁ¤
+ 3.TBLTime : ì‹œê°„ì¸¡ì •
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLHeap') AND Xtype = 'U')
 BEGIN
 	CREATE TABLE TBLHeap
 	(
 		ObjectID			INT PRIMARY KEY NONCLUSTERED,
-		Name				NVARCHAR(2000)				,
-		SchemaID			INT							,
-		ModuleDefinition	NVARCHAR(MAX)
+		Name				NVARCHAR(2000)		    ,
+		SchemaID			INT			    ,
+		ModuleDefinition		NVARCHAR(MAX)
 
 	)
 END
@@ -28,9 +28,9 @@ BEGIN
 	CREATE TABLE TBLCIX
 	(
 		ObjectID			INT PRIMARY KEY CLUSTERED	,
-		Name				NVARCHAR(2000)				,
-		SchemaID			INT							,
-		ModuleDefinition	NVARCHAR(MAX)
+		Name				NVARCHAR(2000)			,
+		SchemaID			INT				,
+		ModuleDefinition		NVARCHAR(MAX)
 
 	)
 END
@@ -45,11 +45,11 @@ BEGIN
 	
 	/* 
 	[DATETIME2 ]
-	MSSQL 2008ºÎÅÍ Áö¿ø, YYYY-MM-DD hh:mm:ss[.¼Ò¼öÀÚ¸´¼ö ÃÊ]
-	ÀÚ¸´¼ö < 3 : 6Byte, ÀÚ¸´¼ö > 3 : 7Byte, ±âÅ¸ : 8Byte
-	DATETIMEÀÇ °æ¿ì 1953³â ÀÌÀü µ¥ÀÌÅÍÀÇ ¹®Á¦ ¹ß»ý, ÃÊ ÀÌÇÏ Á¤È®µµ°¡ ¶³¾îÁö±â ¶§¹®¿¡ ºñ±ÇÀå
+	MSSQL 2008ë¶€í„° ì§€ì›, YYYY-MM-DD hh:mm:ss[.ì†Œìˆ˜ìžë¦¿ìˆ˜ ì´ˆ]
+	ìžë¦¿ìˆ˜ < 3 : 6Byte, ìžë¦¿ìˆ˜ > 3 : 7Byte, ê¸°íƒ€ : 8Byte
+	DATETIMEì˜ ê²½ìš° 1953ë…„ ì´ì „ ë°ì´í„°ì˜ ë¬¸ì œ ë°œìƒ, ì´ˆ ì´í•˜ ì •í™•ë„ê°€ ë–¨ì–´ì§€ê¸° ë•Œë¬¸ì— ë¹„ê¶Œìž¥
 	[SYSUTCDATETIME]
-	DATETIME2 °ªÀ» ¹ÝÈ¯, ¼Ò¼öÀÚ¸´¼ö ÃÊ (1~7ÀÚ¸´¼ö), GETDATE(), GETUTCDATE()º¸´Ù ¸¹Àº ¼Ò¼öÀÚ¸´¼ö ÃÊ º¸À¯
+	DATETIME2 ê°’ì„ ë°˜í™˜, ì†Œìˆ˜ìžë¦¿ìˆ˜ ì´ˆ (1~7ìžë¦¿ìˆ˜), GETDATE(), GETUTCDATE()ë³´ë‹¤ ë§Žì€ ì†Œìˆ˜ìžë¦¿ìˆ˜ ì´ˆ ë³´ìœ 
 
 	*/
 
@@ -57,13 +57,13 @@ BEGIN
 	CREATE TABLE TBLTime
 	(
 		Test		NVARCHAR(50) NOT NULL,
-		StartTime	DATETIME2	 NOT NULL DEFAULT SYSUTCDATETIME(),
+		StartTime	DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME(),
 		EndTime		DATETIME2
 
 	)
 END
 /*************************************************************************************************
- INSERT Å×½ºÆ®
+ INSERT í…ŒìŠ¤íŠ¸
 **************************************************************************************************/
 --TBELHeap
 INSERT INTO TBLTime(TEST)VALUES('TBLHeap')
@@ -99,12 +99,12 @@ GO
 
 
 /*************************************************************************************************
- SELECT Å×½ºÆ®
- 1.RID LookUpÀÇ °æ¿ì Key Lookupº¸´Ù Á¶È¸½Ã ¼Óµµ°¡ ´õ ºü¸§ 
+ SELECT í…ŒìŠ¤íŠ¸
+ 1.RID LookUpì˜ ê²½ìš° Key Lookupë³´ë‹¤ ì¡°íšŒì‹œ ì†ë„ê°€ ë” ë¹ ë¦„ 
    => NONCLUSTERED INDEX : root -> branch -> leaf -> data page
    => NONCLUSTERED INDEX + CLUSTERED INDEX : root -> branch -> leaf -> CLUSTERED INDEX PAGE -> data page
-      => NONCLUSTERED INDEX¿¡ CLUSTERED INDEXÀÇ Å° °ªÀÌ °°ÀÌ ÀúÀå, leaf·¹º§¿¡¼­ ¹Ù·Î data page·Î °¡´Â °ÍÀÌ ¾Æ´Ñ
-	     CLUSTERED INDEX PAGEÀ» °ÅÄ¡°í °¡±â ¶§¹®¿¡ NONCLUSTERED INDEX ÁöÁ¤ µÇ¾úÀ»¶§ º¸´Ü ¼Óµµ°¡ ´À¸²
+      => NONCLUSTERED INDEXì— CLUSTERED INDEXì˜ í‚¤ ê°’ì´ ê°™ì´ ì €ìž¥, leafë ˆë²¨ì—ì„œ ë°”ë¡œ data pageë¡œ ê°€ëŠ” ê²ƒì´ ì•„ë‹Œ
+	     CLUSTERED INDEX PAGEì„ ê±°ì¹˜ê³  ê°€ê¸° ë•Œë¬¸ì— NONCLUSTERED INDEX ì§€ì • ë˜ì—ˆì„ë•Œ ë³´ë‹¨ ì†ë„ê°€ ëŠë¦¼
 **************************************************************************************************/
 SET STATISTICS IO ON
  SELECT*
