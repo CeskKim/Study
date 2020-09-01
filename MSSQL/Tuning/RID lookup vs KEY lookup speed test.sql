@@ -104,7 +104,7 @@ GO
    => NONCLUSTERED INDEX : root -> branch -> leaf -> data page
    => NONCLUSTERED INDEX + CLUSTERED INDEX : root -> branch -> leaf -> CLUSTERED INDEX PAGE -> data page
       => NONCLUSTERED INDEX에 CLUSTERED INDEX의 키 값이 같이 저장, leaf레벨에서 바로 data page로 가는 것이 아닌
-	     CLUSTERED INDEX PAGE을 거치고 가기 때문에 NONCLUSTERED INDEX 지정 되었을때 보단 속도가 느림
+	 CLUSTERED INDEX PAGE을 거치고 가기 때문에 NONCLUSTERED INDEX 지정 되었을때 보단 속도가 느림
 **************************************************************************************************/
 SET STATISTICS IO ON
  SELECT*
