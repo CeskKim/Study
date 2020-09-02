@@ -107,7 +107,7 @@ GO
 	 CLUSTERED INDEX PAGE을 거치고 가기 때문에 NONCLUSTERED INDEX 지정 되었을때 보단 속도가 느림
 **************************************************************************************************/
 SET STATISTICS IO ON
- SELECT*
+ SELECT *
    FROM TBLHeap WITH (INDEX(IDX_TBLHeap)) 
   WHERE Name LIKE N'S%'
  
