@@ -1,13 +1,13 @@
 USE TestDB
 GO
 /*************************************************************************************************
- Å×ÀÌºí »ý¼º ¹× ÀÎµ¦½º »ý¼º 
+ í…Œì´ë¸” ìƒì„± ë° ì¸ë±ìŠ¤ ìƒì„± 
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLDelete') AND Xtype = 'U')
 BEGIN
 	CREATE TABLE TBLDelete
 	(
-		EmpSeq	INT				,
+		EmpSeq	INT		,
 		EmpID	NVARCHAR(20)	,
 		EmpName	NVARCHAR(30)	,
 
@@ -16,15 +16,15 @@ BEGIN
 END
 
 INSERT INTO TBLDelete(EmpSeq, EmpID, EmpName)
-SELECT 1, N'20200902-001', N'È«±æµ¿' WHERE NOT EXISTS(SELECT 1 FROM TBLDelete WHERE EmpSeq = 1)
+SELECT 1, N'20200902-001', N'í™ê¸¸ë™' WHERE NOT EXISTS(SELECT 1 FROM TBLDelete WHERE EmpSeq = 1)
 INSERT INTO TBLDelete(EmpSeq, EmpID, EmpName)
-SELECT 2, N'20200902-002', N'±èÃ¶¼ö' WHERE NOT EXISTS(SELECT 1 FROM TBLDelete WHERE EmpSeq = 2)
+SELECT 2, N'20200902-002', N'ê¹€ì² ìˆ˜' WHERE NOT EXISTS(SELECT 1 FROM TBLDelete WHERE EmpSeq = 2)
 INSERT INTO TBLDelete(EmpSeq, EmpID, EmpName)
-SELECT 3, N'20200902-003', N'°­Àå±º' WHERE NOT EXISTS(SELECT 1 FROM TBLDelete WHERE EmpSeq = 3)
+SELECT 3, N'20200902-003', N'ê°•ìž¥êµ°' WHERE NOT EXISTS(SELECT 1 FROM TBLDelete WHERE EmpSeq = 3)
 
 /*************************************************************************************************
- DELETE Ã¼Å©
- 1.ROLLBACK °¡´É, Á¶°ÇÀÚ ÁöÁ¤ °¡´É
+ DELETE ì²´í¬
+ 1.ROLLBACK ê°€ëŠ¥, ì¡°ê±´ìž ì§€ì • ê°€ëŠ¥
 **************************************************************************************************/
 BEGIN TRAN
 DELETE FROM TBLDelete WHERE EmpSeq = 3
@@ -34,16 +34,16 @@ ROLLBACK TRAN
 SELECT * FROM TBLDelete
 
 /*************************************************************************************************
- ÆäÀÌÁö È®ÀÎ
- *IAM(Index Allocation Map) :  Å×ÀÌºí ÀÎµ¦½º ´ç »ý¼º, ÀÎµ¦½º ¹ÌÁ¸Àç½Ã HeapÀ» °ü¸®ÇÏ±â À§ÇØ ÇÏ³ªÀÇ IAM»ý¼º
- 1.DBCC IND(DB¸í, Å×ÀÌºí, ¿É¼Ç)
-   => ¿É¼Ç - 2 : ¸ðµç IAM Page Á¤º¸, -1 : ¸ðµç ÆäÀÌÁöÀÇ Á¤º¸, 1: Clustered INDEX Á¤º¸, 2 ~ 254 : NONClustered INDEX Á¤º¸
+ íŽ˜ì´ì§€ í™•ì¸
+ *IAM(Index Allocation Map) :  í…Œì´ë¸” ì¸ë±ìŠ¤ ë‹¹ ìƒì„±, ì¸ë±ìŠ¤ ë¯¸ì¡´ìž¬ì‹œ Heapì„ ê´€ë¦¬í•˜ê¸° ìœ„í•´ í•˜ë‚˜ì˜ IAMìƒì„±
+ 1.DBCC IND(DBëª…, í…Œì´ë¸”, ì˜µì…˜)
+   => ì˜µì…˜ - 2 : ëª¨ë“  IAM Page ì •ë³´, -1 : ëª¨ë“  íŽ˜ì´ì§€ì˜ ì •ë³´, 1: Clustered INDEX ì •ë³´, 2 ~ 254 : NONClustered INDEX ì •ë³´
    => PageType = 10 : IAM Page
- 2.DBCC PAGE(DB¸í, ÆÄÀÏ¹øÈ£, ÆäÀÌÁö¹øÈ£, ¿É¼Ç)
-   => DBCC TRACEON(3604) ÇÃ·¡±× ÃßÀûÀ» ONÀ¸·Î ¼± ½ÇÇà
-   => ¿É¼Ç 0 : Çì´õ¸¸, 1 : Çà´ÜÀ§, 2 : ÆäÀÌÁö ´ÜÀ§, 3 : Çà ±×¸®°í Ä®·³ µ¥ÀÌÅÍ
+ 2.DBCC PAGE(DBëª…, íŒŒì¼ë²ˆí˜¸, íŽ˜ì´ì§€ë²ˆí˜¸, ì˜µì…˜)
+   => DBCC TRACEON(3604) í”Œëž˜ê·¸ ì¶”ì ì„ ONìœ¼ë¡œ ì„  ì‹¤í–‰
+   => ì˜µì…˜ 0 : í—¤ë”ë§Œ, 1 : í–‰ë‹¨ìœ„, 2 : íŽ˜ì´ì§€ ë‹¨ìœ„, 3 : í–‰ ê·¸ë¦¬ê³  ì¹¼ëŸ¼ ë°ì´í„°
 **************************************************************************************************/
---DELETE Àü
+--DELETE ì „
 SET STATISTICS IO ON
 SELECT * FROM TBLDelete
 SET STATISTICS IO OFF
@@ -52,8 +52,8 @@ DBCC TRACEON(3604)
 DBCC IND(TestDB, TBLDelete, -1)
 DBCC PAGE(TestDB, 1, 141880, 3)  WITH TABLERESULTS   
 	
---DELETE ÈÄ
---Data°¡ Heap¿¡ Á¸ÀçÇÏ´Â °æ¿ì ÆäÀÌÁö ÇÒ´çÇØÁ¦¸¦ ÇÏÁö ¾ÊÀ½
+--DELETE í›„
+--Dataê°€ Heapì— ì¡´ìž¬í•˜ëŠ” ê²½ìš° íŽ˜ì´ì§€ í• ë‹¹í•´ì œë¥¼ í•˜ì§€ ì•ŠìŒ
 DELETE FROM TBLDelete
 
 SET STATISTICS IO ON
@@ -65,11 +65,11 @@ DBCC IND(TestDB, TBLDelete, -1)
 DBCC PAGE(TestDB, 1, 141880, 3) WITH TABLERESULTS 
 
 /*************************************************************************************************
- ÆäÀÌÁö ÇÒ´ç ÇØÁ¦(DELETE)
+ íŽ˜ì´ì§€ í• ë‹¹ í•´ì œ(DELETE)
  1.WITH(TABLOCK) 
- 2.TRUNCATE »ç¿ë
+ 2.TRUNCATE ì‚¬ìš©
 **************************************************************************************************/
---DELETE Àü
+--DELETE ì „
 SET STATISTICS IO ON
 SELECT * FROM TBLDelete
 SET STATISTICS IO OFF
@@ -78,7 +78,7 @@ DBCC TRACEON(3604)
 DBCC IND(TestDB, TBLDelete, -1)
 DBCC PAGE(TestDB, 1, 149976, 3)  WITH TABLERESULTS 
 
---DELETE ÈÄ
+--DELETE í›„
 DELETE FROM TBLDelete WITH(TABLOCK) 
 
 SET STATISTICS IO ON
@@ -101,22 +101,22 @@ DBCC PAGE(TestDB, 1, 149976, 3) WITH TABLERESULTS
 
 
 /*************************************************************************************************
- Æ®·£Àè¼Ç ·Î±× DELETE ·Î±× È®ÀÎ
+ íŠ¸ëžœìž­ì…˜ ë¡œê·¸ DELETE ë¡œê·¸ í™•ì¸
 **************************************************************************************************/
 SELECT [Current LSN]	
-	  ,[Operation]		
-	  ,[Transaction ID] 
-	  ,[Begin Time]
-	  ,LEFT ([Description], 40) AS [Description]
+      ,[Operation]		
+      ,[Transaction ID] 
+      ,[Begin Time]
+      ,LEFT ([Description], 40) AS [Description]
   FROM fn_dblog(NULL, NULL)
  WHERE AllocUnitName LIKE '%TBLDelete%'
 
 
  /*************************************************************************************************
- TRUNCATE Ã¼Å©
- 1.ROLLBACK °¡´É, Á¶°ÇÀÚ ÁöÁ¤ ºÒ°¡´É
- 2.IDENTITY SEED Àç¼³Á¤, ÆäÀÌÁö ÇÒ´ç ÇØÁ¦¸¦ ÅëÇØ ÇØ´ç ÆäÀÌÁö°¡ ´Ù¸¥ ¿µ¿ª¿¡¼­ »ç¿ë °¡´É
- 3.FOREIGN KEY  ³»¿ªÀº »èÁ¦ ºÒ°¡´É
+ TRUNCATE ì²´í¬
+ 1.ROLLBACK ê°€ëŠ¥, ì¡°ê±´ìž ì§€ì • ë¶ˆê°€ëŠ¥
+ 2.IDENTITY SEED ìž¬ì„¤ì •, íŽ˜ì´ì§€ í• ë‹¹ í•´ì œë¥¼ í†µí•´ í•´ë‹¹ íŽ˜ì´ì§€ê°€ ë‹¤ë¥¸ ì˜ì—­ì—ì„œ ì‚¬ìš© ê°€ëŠ¥
+ 3.FOREIGN KEY  ë‚´ì—­ì€ ì‚­ì œ ë¶ˆê°€ëŠ¥
 **************************************************************************************************/
 BEGIN TRAN
 TRUNCATE TABLE TBLDelete
@@ -125,13 +125,13 @@ GO
 ROLLBACK TRAN
 SELECT * FROM TBLDelete
 
---FOREIGN KEY ¼³Á¤
+--FOREIGN KEY ì„¤ì •
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLDeleteForegin') AND Xtype = 'U')
 BEGIN
 	CREATE TABLE TBLDeleteForegin
 	(
-		OrderSeq			INT				,
-		OrderDate			NCHAR(8)		,
+		OrderSeq			INT		,
+		OrderDate			NCHAR(8)	,
 		OrderName			NVARCHAR(30)	,
 		EmpSeq				INT
 		
@@ -140,32 +140,31 @@ BEGIN
 	)
 END
 
---¿øº» Å×ÀÌºíÀÇ µ¥ÀÌÅÍ°¡ Á¸ÀçÇØ¾ß¸¸ ÂüÁ¶ÇÏ´Â µ¥ÀÌÅÍ INSERT °¡´É
+--ì›ë³¸ í…Œì´ë¸”ì˜ ë°ì´í„°ê°€ ì¡´ìž¬í•´ì•¼ë§Œ ì°¸ì¡°í•˜ëŠ” ë°ì´í„° INSERT ê°€ëŠ¥
 INSERT INTO TBLDeleteForegin(OrderSeq,OrderDate,OrderName,EmpSeq)
-SELECT 1,N'20200902', N'°¡ÀüÁ¦Ç°',1 WHERE NOT EXISTS(SELECT 1 FROM TBLDeleteForegin WHERE OrderSeq = 1)
+SELECT 1,N'20200902', N'ê°€ì „ì œí’ˆ',1 WHERE NOT EXISTS(SELECT 1 FROM TBLDeleteForegin WHERE OrderSeq = 1)
 INSERT INTO TBLDeleteForegin(OrderSeq,OrderDate, OrderName,EmpSeq)
-SELECT 2,N'20200902', N'ÈÞ´ëÆù', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLDeleteForegin WHERE OrderSeq = 2)
+SELECT 2,N'20200902', N'íœ´ëŒ€í°', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLDeleteForegin WHERE OrderSeq = 2)
 
---FOREIGN KEY ³»¿ªÀÌ µÇ¾î ÀÖ´Â ¿øº» Å×ÀÌºí TRUNCATE ½Ã ¿À·ù ¹ß»ý
---Å×ÀÌºí 'TBLDelete'Àº(´Â) FOREIGN KEY Á¦¾à Á¶°Ç¿¡ ÀÇÇØ ÂüÁ¶µÇ¹Ç·Î ÀÚ¸¦ ¼ö ¾ø½À´Ï´Ù. ¸Þ½ÃÁö ¹ß»ý
+--FOREIGN KEY ë‚´ì—­ì´ ë˜ì–´ ìžˆëŠ” ì›ë³¸ í…Œì´ë¸” TRUNCATE ì‹œ ì˜¤ë¥˜ ë°œìƒ
+--í…Œì´ë¸” 'TBLDelete'ì€(ëŠ”) FOREIGN KEY ì œì•½ ì¡°ê±´ì— ì˜í•´ ì°¸ì¡°ë˜ë¯€ë¡œ ìžë¥¼ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ë©”ì‹œì§€ ë°œìƒ
 TRUNCATE TABLE TBLDelete
 
 
-
 /*************************************************************************************************
- Æ®·£Àè¼Ç ·Î±× TRUNCATE ·Î±× È®ÀÎ
+ íŠ¸ëžœìž­ì…˜ ë¡œê·¸ TRUNCATE ë¡œê·¸ í™•ì¸
 **************************************************************************************************/
 SELECT [Current LSN]	
-	  ,[Operation]		
-	  ,[Transaction ID] 
-	  ,[Begin Time]
-	  ,LEFT ([Description], 40) AS [Description]
+      ,[Operation]		
+      ,[Transaction ID] 
+      ,[Begin Time]
+      ,LEFT ([Description], 40) AS [Description]
   FROM fn_dblog(NULL, NULL)
  WHERE AllocUnitName LIKE '%TBLDelete%'
 
- 
+
 /*************************************************************************************************
- ÂüÁ¶»çÀÌÆ® 
+ ì°¸ì¡°ì‚¬ì´íŠ¸ 
  https://www.mssqltips.com/sqlservertip/4248/differences-between-delete-and-truncate-in-sql-server/
  https://www.mssqltips.com/sqlservertip/1080/deleting-data-in-sql-server-with-truncate-vs-delete-commands/
 **************************************************************************************************/
