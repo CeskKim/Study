@@ -4,3 +4,4 @@
 ## 구성
 - [Tuning] : 튜닝 테스트
 - [Recover&BackUp] : 복원 및 백업 테스트
+- [BASE] : 기본 내역 테스트
