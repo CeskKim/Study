@@ -1,14 +1,14 @@
 USE TestDB
 GO
 /*************************************************************************************************
- Å×ÀÌºí »ı¼º
+ í…Œì´ë¸” ìƒì„±
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLIndexDestiny') AND Xtype = 'U')
 BEGIN
 	CREATE TABLE TBLIndexDestiny
 	(
 		COL1		INT NOT NULL,
-		COL2		INT			,
+		COL2		INT	    ,
 		COL3		INT
 	)
 END
@@ -24,13 +24,13 @@ BEGIN
 	SELECT @Num = @Num + 1
 END
 
-ALTER TABLE TBLIndexDestiny ADD CONSTRAINT PK_TBLIndexDestiny PRIMARY KEY CLUSTERED(COL1 ASC) WITH(FILLFACTOR = 90) -- FILLFACTOR : IndexData Ã¤¿ì±â ºñÀ²
+ALTER TABLE TBLIndexDestiny ADD CONSTRAINT PK_TBLIndexDestiny PRIMARY KEY CLUSTERED(COL1 ASC) WITH(FILLFACTOR = 90) -- FILLFACTOR : IndexData ì±„ìš°ê¸° ë¹„ìœ¨
 
 /*************************************************************************************************
- Åë°èÁ¤º¸ È®ÀÎ_01
- ±âº»±¸Á¶ : DBCC SHOW_STATISTICS(Å×ÀÌºí¸í, ÀÎµ¦½º¸í)
+ í†µê³„ì •ë³´ í™•ì¸_01
+ ê¸°ë³¸êµ¬ì¡° : DBCC SHOW_STATISTICS(í…Œì´ë¸”ëª…, ì¸ë±ìŠ¤ëª…)
  1.ALL density : Distinct / unique values -> 1 / 100 -> 0.1
- 2.Steps : HISTOGRAMÀÇ ´Ü°è¸¦ Ç¥½ÃÇÏ¸ç, ÃÖ´ë´Ü°è 200
+ 2.Steps : HISTOGRAMì˜ ë‹¨ê³„ë¥¼ í‘œì‹œí•˜ë©°, ìµœëŒ€ë‹¨ê³„ 200
 **************************************************************************************************/
 USE TestDB
 GO
@@ -40,30 +40,30 @@ SELECT *
 DBCC SHOW_STATISTICS ('TBLIndexDestiny', 'PK_TBLIndexDestiny')
 
 /*************************************************************************************************
- Åë°èÁ¤º¸ È®ÀÎ_02
- £ªadventureworks »ç¿ë
- 1.»ó¼ö ´ë½Å ¹ÙÀÎµå º¯¼ö ±â¼ú½Ã ¿ÉÆ¼¸¶ÀÌÀú´Â È÷½ºÅä±×·¥ ´ë½Å ¹Ğµµ ¸¦ »ç¿ëÇØ ºñ¿ë °è»ê
+ í†µê³„ì •ë³´ í™•ì¸_02
+ ï¼Šadventureworks ì‚¬ìš©
+ 1.ìƒìˆ˜ ëŒ€ì‹  ë°”ì¸ë“œ ë³€ìˆ˜ ê¸°ìˆ ì‹œ ì˜µí‹°ë§ˆì´ì €ëŠ” íˆìŠ¤í† ê·¸ë¨ ëŒ€ì‹  ë°€ë„ ë¥¼ ì‚¬ìš©í•´ ë¹„ìš© ê³„ì‚°
 **************************************************************************************************/
 USE ExampleDB
 GO
 DBCC SHOW_STATISTICS('sales.SalesOrderDetail', 'IX_SalesOrderDetail_ProductID') WITH HISTOGRAM 
 SET STATISTICS IO ON 
 
---½ÇÇà°èÈ¹ -> ¿¹»ó½ÇÇàÈ½¼ö ¿Í ½ÇÁ¦Çà¼ö  ºÒÀÏÄ¡ ->  DBCC SHOW_STATISTICS('sales.SalesOrderDetail', 'IX_SalesOrderDetail_ProductID') WITH(HISTOGRAM)·Î È®ÀÎ 
---RANGE_HI_KEY : 897ÀÇ ±ÙÃ³°ª 898ÀÇ AVG_RANGE_ROWS 75.6666À» ¿¹»óÇà¼ö·Î Á¦°ø
+--ì‹¤í–‰ê³„íš -> ì˜ˆìƒì‹¤í–‰íšŸìˆ˜ ì™€ ì‹¤ì œí–‰ìˆ˜  ë¶ˆì¼ì¹˜ ->  DBCC SHOW_STATISTICS('sales.SalesOrderDetail', 'IX_SalesOrderDetail_ProductID') WITH(HISTOGRAM)ë¡œ í™•ì¸ 
+--RANGE_HI_KEY : 897ì˜ ê·¼ì²˜ê°’ 898ì˜ AVG_RANGE_ROWS 75.6666ì„ ì˜ˆìƒí–‰ìˆ˜ë¡œ ì œê³µ
 SELECT SalesOrderID, SalesOrderDetailID
   FROM [Sales].[SalesOrderDetail]
  WHERE productid = 897
 
---1.»ó¼ö »ç¿ë
---½ÇÇà°èÈ¹ -> ¿¹»ó½ÇÇàÈ½¼ö ¿Í ½ÇÁ¦Çà¼ö ÀÏÄ¡ ->  DBCC SHOW_STATISTICS('sales.SalesOrderDetail', 'IX_SalesOrderDetail_ProductID') WITH(HISTOGRAM)·Î È®ÀÎ 
---RANGE_HI_KEY : 870ÀÌ Á¸ÀçÇÏ¿© EQ_ROWS 4688 Á¦°ø
+--1.ìƒìˆ˜ ì‚¬ìš©
+--ì‹¤í–‰ê³„íš -> ì˜ˆìƒì‹¤í–‰íšŸìˆ˜ ì™€ ì‹¤ì œí–‰ìˆ˜ ì¼ì¹˜ ->  DBCC SHOW_STATISTICS('sales.SalesOrderDetail', 'IX_SalesOrderDetail_ProductID') WITH(HISTOGRAM)ë¡œ í™•ì¸ 
+--RANGE_HI_KEY : 870ì´ ì¡´ì¬í•˜ì—¬ EQ_ROWS 4688 ì œê³µ
 SELECT SalesOrderID, SalesOrderDetailID
   FROM [Sales].[SalesOrderDetail]
  WHERE productid = 870
 
  DBCC SHOW_STATISTICS('sales.SalesOrderDetail', 'IX_SalesOrderDetail_ProductID')
---2.¹ÙÀÎµå º¯¼ö »ç¿ë
+--2.ë°”ì¸ë“œ ë³€ìˆ˜ ì‚¬ìš©
  DECLARE @productid INT
  SELECT @productid =870
 
@@ -71,9 +71,9 @@ SELECT SalesOrderID, SalesOrderDetailID
   FROM [Sales].[SalesOrderDetail]
  WHERE productid = @productid
 
---3.ÇÁ·Î½ÃÀú Parameter »ç¿ë
---»ó¼ö»ç¿ë°ú ¸¶Âù°¡Áö·Î Histogram »ç¿ë(Bind Peeking, Parameter SnifiingÀÌ¿ë °¡´ÉÀ¸·Î ÀÎÇØ)
---Bind Peeking : SQL ÃÖÃÊ ½ÇÇà½Ã ¹ÙÀÎµå º¯¼ö Æ÷ÇÔ, ¹ÙÀÎµå º¯¼ö¿¡ °ªÀ» ÂüÁ¶ ½ÇÇà°èÈ¹ ½ÇÇà
+--3.í”„ë¡œì‹œì € Parameter ì‚¬ìš©
+--ìƒìˆ˜ì‚¬ìš©ê³¼ ë§ˆì°¬ê°€ì§€ë¡œ Histogram ì‚¬ìš©(Bind Peeking, Parameter Snifiingì´ìš© ê°€ëŠ¥ìœ¼ë¡œ ì¸í•´)
+--Bind Peeking : SQL ìµœì´ˆ ì‹¤í–‰ì‹œ ë°”ì¸ë“œ ë³€ìˆ˜ í¬í•¨, ë°”ì¸ë“œ ë³€ìˆ˜ì— ê°’ì„ ì°¸ì¡° ì‹¤í–‰ê³„íš ì‹¤í–‰
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('_SPHistTestQuery') AND xtype = 'P')
 	DROP PROC _SPHistTestQuery
 GO
@@ -89,8 +89,8 @@ RETURN
 GO
 EXEC _SPHistTestQuery 870
 
---4.ÇÁ·Î½ÃÀú Parameter ¹Ì »ç¿ë
---³»ºÎ¿¡¼­ ¹ÙÀÎµå º¯¼ö »ç¿ë ¹Ğµµ »ç¿ë(Bind Peeking, Parameter SnifiingÀÌ¿ë ºÒ°¡´ÉÀ¸·Î ÀÎÇØ)
+--4.í”„ë¡œì‹œì € Parameter ë¯¸ ì‚¬ìš©
+--ë‚´ë¶€ì—ì„œ ë°”ì¸ë“œ ë³€ìˆ˜ ì‚¬ìš© ë°€ë„ ì‚¬ìš©(Bind Peeking, Parameter Snifiingì´ìš© ë¶ˆê°€ëŠ¥ìœ¼ë¡œ ì¸í•´)
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('_SPHistTestQuery') AND xtype = 'P')
 	DROP PROC _SPHistTestQuery
 GO
@@ -98,7 +98,6 @@ CREATE PROC _SPHistTestQuery
 
 AS 
 	 DECLARE @productid INT
-
 	 SELECT @productid = 870
 
 	 SELECT SalesOrderID, SalesOrderDetailID
@@ -110,7 +109,7 @@ GO
 EXEC _SPHistTestQuery
 
 /*************************************************************************************************
- ÂüÁ¶»çÀÌÆ® 
+ ì°¸ì¡°ì‚¬ì´íŠ¸ 
  https://www.mssqltips.com/sqlservertip/4092/how-to-interpret-sql-server-dbcc-showstatistics-output/
  https://www.sentryone.com/blog/loriedwards/statistics-2
  https://docs.microsoft.com/ko-kr/sql/t-sql/database-console-commands/dbcc-show-statistics-transact-sql?view=sql-server-ver15
