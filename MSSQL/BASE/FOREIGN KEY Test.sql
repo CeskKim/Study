@@ -1,19 +1,19 @@
 USE TestDB
 GO
 /*************************************************************************************************
- ≈◊¿Ã∫Ì ª˝º∫
- 1.±‚¡ÿ ≈◊¿Ã∫Ì : TBLUser
- 2.¬¸¡∂ ≈◊¿Ã∫Ì : TBLItem
-   2.1 CASCADE     : ±‚¡ÿ≈◊¿Ã∫Ì ∫Ø∞Ê,ªË¡¶ -> ¬¸¡∂≈◊¿Ã∫Ì ∫Ø∞Ê, ªË¡¶
-   2.2 SET NULL    : ±‚¡ÿ≈◊¿Ã∫Ì ªË¡¶ -> ¬¸¡∂≈◊¿Ã∫Ì «ÿ¥Á « µÂ NULL ∞™
-   2.3 SET DEFAULT : ±‚¡ÿ≈◊¿Ã∫Ì ªË¡¶ -> ¬¸¡∂≈◊¿Ã∫Ì «ÿ¥Á « µÂ DEFAULT ∞™
-   2.4 NO ACTION   : ¬¸¡∂π´∞·º∫ ¿ßπ›«œ¥¬ æ◊º«¿∫ µ«¡ˆ æ ¿Ω
+ ÌÖåÏù¥Î∏î ÏÉùÏÑ±
+ 1.Í∏∞Ï§Ä ÌÖåÏù¥Î∏î : TBLUser
+ 2.Ï∞∏Ï°∞ ÌÖåÏù¥Î∏î : TBLItem
+   2.1 CASCADE     : Í∏∞Ï§ÄÌÖåÏù¥Î∏î Î≥ÄÍ≤Ω,ÏÇ≠Ï†ú -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Î≥ÄÍ≤Ω, ÏÇ≠Ï†ú
+   2.2 SET NULL    : Í∏∞Ï§ÄÌÖåÏù¥Î∏î ÏÇ≠Ï†ú -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Ìï¥Îãπ ÌïÑÎìú NULL Í∞í
+   2.3 SET DEFAULT : Í∏∞Ï§ÄÌÖåÏù¥Î∏î ÏÇ≠Ï†ú -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Ìï¥Îãπ ÌïÑÎìú DEFAULT Í∞í
+   2.4 NO ACTION   : Ï∞∏Ï°∞Î¨¥Í≤∞ÏÑ± ÏúÑÎ∞òÌïòÎäî Ïï°ÏÖòÏùÄ ÎêòÏßÄ ÏïäÏùå
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLBase') AND Xtype = 'U')
 BEGIN
 	CREATE TABLE TBLBase
 	(
-		UserSeq		INT				,
+		UserSeq		INT		,
 		UserID		NVARCHAR(20)	,
 		UserName	NVARCHAR(30)	,
 
@@ -24,40 +24,40 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLItem') AND Xtype
 BEGIN
 	CREATE TABLE TBLItem
 	(
-		ItemSeq			INT				,
-		ItemDate		NCHAR(8)		,
+		ItemSeq			INT		,
+		ItemDate		NCHAR(8)	,
 		ItemName		NVARCHAR(30)	,
 		UserSeq			INT
 		
 		CONSTRAINT PK_TBLItem PRIMARY KEY (ItemSeq)
-		CONSTRAINT FK_TBLItem FOREIGN KEY (UserSeq) REFERENCES TBLBase(UserSeq) --¬¸¡∂≈◊¿Ã∫Ìø°º≠ ±‚¡ÿ≈◊¿Ã∫Ìø° ¬¸¡∂ ƒÆ∑≥¿Ã PK/UNIQUE∑Œ º≥¡§µ«æÓæﬂ«‘
+		CONSTRAINT FK_TBLItem FOREIGN KEY (UserSeq) REFERENCES TBLBase(UserSeq) --Ï∞∏Ï°∞ÌÖåÏù¥Î∏îÏóêÏÑú Í∏∞Ï§ÄÌÖåÏù¥Î∏îÏóê Ï∞∏Ï°∞ ÏπºÎüºÏù¥ PK/UNIQUEÎ°ú ÏÑ§Ï†ïÎêòÏñ¥ÏïºÌï®
 	)
 END
 
 INSERT INTO TBLBase(UserSeq, UserID, UserName)
-SELECT 1, N'Chobo', N'»´±Êµø' WHERE NOT EXISTS(SELECT 1 FROM TBLBase WHERE UserSeq = 1)
+SELECT 1, N'Chobo', N'ÌôçÍ∏∏Îèô' WHERE NOT EXISTS(SELECT 1 FROM TBLBase WHERE UserSeq = 1)
 INSERT INTO TBLBase(UserSeq, UserID, UserName)
-SELECT 2, N'Hauso', N'±Ë√∂ºˆ' WHERE NOT EXISTS(SELECT 1 FROM TBLBase WHERE UserSeq = 2)
+SELECT 2, N'Hauso', N'ÍπÄÏ≤†Ïàò' WHERE NOT EXISTS(SELECT 1 FROM TBLBase WHERE UserSeq = 2)
 INSERT INTO TBLBase(UserSeq, UserID, UserName)
-SELECT 3, N'Got', N'∞≠¿Â±∫' WHERE NOT EXISTS(SELECT 1 FROM TBLBase WHERE UserSeq = 3)
+SELECT 3, N'Got', N'Í∞ïÏû•Íµ∞' WHERE NOT EXISTS(SELECT 1 FROM TBLBase WHERE UserSeq = 3)
 
---ø¯∫ª ≈◊¿Ã∫Ì¿« µ•¿Ã≈Õ∞° ¡∏¿Á«ÿæﬂ∏∏ ¬¸¡∂«œ¥¬ µ•¿Ã≈Õ INSERT ∞°¥…
+--ÏõêÎ≥∏ ÌÖåÏù¥Î∏îÏùò Îç∞Ïù¥ÌÑ∞Í∞Ä Ï°¥Ïû¨Ìï¥ÏïºÎßå Ï∞∏Ï°∞ÌïòÎäî Îç∞Ïù¥ÌÑ∞ INSERT Í∞ÄÎä•
 INSERT INTO TBLItem(ItemSeq,ItemDate,ItemName,UserSeq)
-SELECT 1,N'20200902', N'∞°¿¸¡¶«∞',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
+SELECT 1,N'20200902', N'Í∞ÄÏ†ÑÏ†úÌíà',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
 INSERT INTO TBLItem(ItemSeq,ItemDate, ItemName,UserSeq)
-SELECT 2,N'20200902', N'»ﬁ¥Î∆˘', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
+SELECT 2,N'20200902', N'Ìú¥ÎåÄÌè∞', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
 
 /*
-  CASCADE : ±‚¡ÿ≈◊¿Ã∫Ì ∫Ø∞Ê,ªË¡¶ -> ¬¸¡∂≈◊¿Ã∫Ì ∫Ø∞Ê, ªË¡¶
-  UPDATE CASECADE : ±‚¡ÿ≈◊¿Ã∫Ì ∫Ø∞Ê -> ¬¸¡∂≈◊¿Ã∫Ì ∞∞¿Ã ∫Ø∞Ê,  DELETE CASECADE : ±‚¡ÿ≈◊¿Ã∫Ì ªË¡¶ -> ¬¸¡∂≈◊¿Ã∫Ì ∞∞¿Ã ªË¡¶
+  CASCADE : Í∏∞Ï§ÄÌÖåÏù¥Î∏î Î≥ÄÍ≤Ω,ÏÇ≠Ï†ú -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Î≥ÄÍ≤Ω, ÏÇ≠Ï†ú
+  UPDATE CASECADE : Í∏∞Ï§ÄÌÖåÏù¥Î∏î Î≥ÄÍ≤Ω -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Í∞ôÏù¥ Î≥ÄÍ≤Ω,  DELETE CASECADE : Í∏∞Ï§ÄÌÖåÏù¥Î∏î ÏÇ≠Ï†ú -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Í∞ôÏù¥ ÏÇ≠Ï†ú
 */
 DROP TABLE TBLItem
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLItem') AND Xtype = 'U')
 BEGIN
 	CREATE TABLE TBLItem
 	(
-		ItemSeq			INT				,
-		ItemDate		NCHAR(8)		,
+		ItemSeq			INT		,
+		ItemDate		NCHAR(8)	,
 		ItemName		NVARCHAR(30)	,
 		UserSeq			INT
 		
@@ -67,9 +67,9 @@ BEGIN
 	)
 END
 INSERT INTO TBLItem(ItemSeq,ItemDate,ItemName,UserSeq)
-SELECT 1,N'20200902', N'∞°¿¸¡¶«∞',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
+SELECT 1,N'20200902', N'Í∞ÄÏ†ÑÏ†úÌíà',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
 INSERT INTO TBLItem(ItemSeq,ItemDate, ItemName,UserSeq)
-SELECT 2,N'20200902', N'»ﬁ¥Î∆˘', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
+SELECT 2,N'20200902', N'Ìú¥ÎåÄÌè∞', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
 
 UPDATE TBLBase
    SET UserSeq = 5
@@ -84,8 +84,8 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLItem') AND Xtype
 BEGIN
 	CREATE TABLE TBLItem
 	(
-		ItemSeq			INT				,
-		ItemDate		NCHAR(8)		,
+		ItemSeq			INT		,
+		ItemDate		NCHAR(8)	,
 		ItemName		NVARCHAR(30)	,
 		UserSeq			INT
 		
@@ -94,15 +94,15 @@ BEGIN
 	
 	)
 END
---±‚¡ÿ≈◊¿Ã∫Ì µ•¿Ã≈Õ ø¯∫π
+--Í∏∞Ï§ÄÌÖåÏù¥Î∏î Îç∞Ïù¥ÌÑ∞ ÏõêÎ≥µ
 UPDATE TBLBase
    SET UserSeq = 1
  WHERE UserSeq = 5
 
 INSERT INTO TBLItem(ItemSeq,ItemDate,ItemName,UserSeq)
-SELECT 1,N'20200902', N'∞°¿¸¡¶«∞',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
+SELECT 1,N'20200902', N'Í∞ÄÏ†ÑÏ†úÌíà',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
 INSERT INTO TBLItem(ItemSeq,ItemDate, ItemName,UserSeq)
-SELECT 2,N'20200902', N'»ﬁ¥Î∆˘', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
+SELECT 2,N'20200902', N'Ìú¥ÎåÄÌè∞', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
 
 DELETE FROM TBLBase WHERE UserSeq = 1
 SELECT * FROM TBLItem
@@ -110,9 +110,9 @@ SELECT * FROM TBLItem
 
 
 /*
-  SET NULL    : ±‚¡ÿ≈◊¿Ã∫Ì ∫Ø∞Ê,ªË¡¶ -> ¬¸¡∂≈◊¿Ã∫Ì «ÿ¥Á « µÂ NULL ∞™
-  UPDATE SET NULL : ±‚¡ÿ≈◊¿Ã∫Ì ∫Ø∞Ê -> ¬¸¡∂≈◊¿Ã∫Ì ∞∞¿Ã « µÂ NULL,  DELETE SET NULL : ±‚¡ÿ≈◊¿Ã∫Ì ªË¡¶ -> ¬¸¡∂≈◊¿Ã∫Ì « µÂ NULL
-  «ÿ¥Á ¬¸¡∂ « µÂ¥¬ NULL∞™¿∏∑Œ º≥¡§µ«æÓæﬂ «‘
+  SET NULL    : Í∏∞Ï§ÄÌÖåÏù¥Î∏î Î≥ÄÍ≤Ω,ÏÇ≠Ï†ú -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Ìï¥Îãπ ÌïÑÎìú NULL Í∞í
+  UPDATE SET NULL : Í∏∞Ï§ÄÌÖåÏù¥Î∏î Î≥ÄÍ≤Ω -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Í∞ôÏù¥ ÌïÑÎìú NULL,  DELETE SET NULL : Í∏∞Ï§ÄÌÖåÏù¥Î∏î ÏÇ≠Ï†ú -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î ÌïÑÎìú NULL
+  Ìï¥Îãπ Ï∞∏Ï°∞ ÌïÑÎìúÎäî NULLÍ∞íÏúºÎ°ú ÏÑ§Ï†ïÎêòÏñ¥Ïïº Ìï®
 */
 
  DROP TABLE TBLItem
@@ -120,8 +120,8 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLItem') AND Xtype
 BEGIN
 	CREATE TABLE TBLItem
 	(
-		ItemSeq			INT				,
-		ItemDate		NCHAR(8)		,
+		ItemSeq			INT		,
+		ItemDate		NCHAR(8)	,
 		ItemName		NVARCHAR(30)	,
 		UserSeq			INT	NULL
 		
@@ -131,9 +131,9 @@ BEGIN
 	)
 END
 INSERT INTO TBLItem(ItemSeq,ItemDate,ItemName,UserSeq)
-SELECT 1,N'20200902', N'∞°¿¸¡¶«∞',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
+SELECT 1,N'20200902', N'Í∞ÄÏ†ÑÏ†úÌíà',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
 INSERT INTO TBLItem(ItemSeq,ItemDate, ItemName,UserSeq)
-SELECT 2,N'20200902', N'»ﬁ¥Î∆˘', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
+SELECT 2,N'20200902', N'Ìú¥ÎåÄÌè∞', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
 
 UPDATE TBLBase
    SET UserSeq = 5
@@ -146,8 +146,8 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLItem') AND Xtype
 BEGIN
 	CREATE TABLE TBLItem
 	(
-		ItemSeq			INT				,
-		ItemDate		NCHAR(8)		,
+		ItemSeq			INT		,
+		ItemDate		NCHAR(8)	,
 		ItemName		NVARCHAR(30)	,
 		UserSeq			INT	NULL
 		
@@ -157,11 +157,11 @@ BEGIN
 	)
 END
 INSERT INTO TBLItem(ItemSeq,ItemDate,ItemName,UserSeq)
-SELECT 1,N'20200902', N'∞°¿¸¡¶«∞',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
+SELECT 1,N'20200902', N'Í∞ÄÏ†ÑÏ†úÌíà',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
 INSERT INTO TBLItem(ItemSeq,ItemDate, ItemName,UserSeq)
-SELECT 2,N'20200902', N'»ﬁ¥Î∆˘', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
+SELECT 2,N'20200902', N'Ìú¥ÎåÄÌè∞', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
 
---±‚¡ÿµ•¿Ã≈Õ ø¯∫π
+--Í∏∞Ï§ÄÎç∞Ïù¥ÌÑ∞ ÏõêÎ≥µ
 UPDATE TBLBase
    SET UserSeq = 1
  WHERE UserSeq = 5
@@ -172,10 +172,10 @@ UPDATE TBLBase
 
 
  /*
-  SET DEFAULT : ±‚¡ÿ≈◊¿Ã∫Ì ∫Ø∞Ê,ªË¡¶ -> ¬¸¡∂≈◊¿Ã∫Ì «ÿ¥Á « µÂ DEFAULT ∞™
-  UPDATE SET NULL : ±‚¡ÿ≈◊¿Ã∫Ì ∫Ø∞Ê -> ¬¸¡∂≈◊¿Ã∫Ì ∞∞¿Ã « µÂ DEFAULT,  DELETE SET NULL : ±‚¡ÿ≈◊¿Ã∫Ì ªË¡¶ -> ¬¸¡∂≈◊¿Ã∫Ì « µÂ DEFAULT
-  UPDATE -> ±‚¡ÿ≈◊¿Ã∫Ìø°º≠ æ˜µ•¿Ã∆Æ «œ¥¬ ∞™¿Ã ¬¸¡∂≈◊¿Ã∫Ìø° ¬¸¡∂ « µÂ ±‚∫ª∞™¿∏∑Œ º≥¡§µ» ∞ÊøÏ∏∏ ¡¯«‡
-  DELETE -> ±‚¡ÿ≈◊¿Ã∫Ìø°º≠ ªË¡¶ Ω√ ¬¸¡∂≈◊¿Ã∫Ì¿« ¬¸¡∂ « µÂ ±‚∫ª ∞™¿Ã ±‚¡ÿ≈◊¿Ã∫Ì π¸¿ß æ»ø° ¡∏¿Á«œ¥¬ ∞ÊøÏø°∏∏ ¡¯«‡
+  SET DEFAULT : Í∏∞Ï§ÄÌÖåÏù¥Î∏î Î≥ÄÍ≤Ω,ÏÇ≠Ï†ú -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Ìï¥Îãπ ÌïÑÎìú DEFAULT Í∞í
+  UPDATE SET NULL : Í∏∞Ï§ÄÌÖåÏù¥Î∏î Î≥ÄÍ≤Ω -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î Í∞ôÏù¥ ÌïÑÎìú DEFAULT,  DELETE SET NULL : Í∏∞Ï§ÄÌÖåÏù¥Î∏î ÏÇ≠Ï†ú -> Ï∞∏Ï°∞ÌÖåÏù¥Î∏î ÌïÑÎìú DEFAULT
+  UPDATE -> Í∏∞Ï§ÄÌÖåÏù¥Î∏îÏóêÏÑú ÏóÖÎç∞Ïù¥Ìä∏ ÌïòÎäî Í∞íÏù¥ Ï∞∏Ï°∞ÌÖåÏù¥Î∏îÏóê Ï∞∏Ï°∞ ÌïÑÎìú Í∏∞Î≥∏Í∞íÏúºÎ°ú ÏÑ§Ï†ïÎêú Í≤ΩÏö∞Îßå ÏßÑÌñâ
+  DELETE -> Í∏∞Ï§ÄÌÖåÏù¥Î∏îÏóêÏÑú ÏÇ≠Ï†ú Ïãú Ï∞∏Ï°∞ÌÖåÏù¥Î∏îÏùò Ï∞∏Ï°∞ ÌïÑÎìú Í∏∞Î≥∏ Í∞íÏù¥ Í∏∞Ï§ÄÌÖåÏù¥Î∏î Î≤îÏúÑ ÏïàÏóê Ï°¥Ïû¨ÌïòÎäî Í≤ΩÏö∞ÏóêÎßå ÏßÑÌñâ
 */
 
  DROP TABLE TBLItem
@@ -183,8 +183,8 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLItem') AND Xtype
 BEGIN
 	CREATE TABLE TBLItem
 	(
-		ItemSeq			INT				,
-		ItemDate		NCHAR(8)		,
+		ItemSeq			INT		,
+		ItemDate		NCHAR(8)	,
 		ItemName		NVARCHAR(30)	,
 		UserSeq			INT	DEFAULT(5)
 		
@@ -195,9 +195,9 @@ BEGIN
 END
 
 INSERT INTO TBLItem(ItemSeq,ItemDate,ItemName,UserSeq)
-SELECT 1,N'20200902', N'∞°¿¸¡¶«∞',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
+SELECT 1,N'20200902', N'Í∞ÄÏ†ÑÏ†úÌíà',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
 INSERT INTO TBLItem(ItemSeq,ItemDate, ItemName,UserSeq)
-SELECT 2,N'20200902', N'»ﬁ¥Î∆˘', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
+SELECT 2,N'20200902', N'Ìú¥ÎåÄÌè∞', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
 
 UPDATE TBLBase
    SET UserSeq = 1
@@ -212,8 +212,8 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLItem') AND Xtype
 BEGIN
 	CREATE TABLE TBLItem
 	(
-		ItemSeq			INT				,
-		ItemDate		NCHAR(8)		,
+		ItemSeq			INT		,
+		ItemDate		NCHAR(8)	,
 		ItemName		NVARCHAR(30)	,
 		UserSeq			INT	DEFAULT(2)
 		
@@ -224,9 +224,9 @@ BEGIN
 END
 
 INSERT INTO TBLItem(ItemSeq,ItemDate,ItemName,UserSeq)
-SELECT 1,N'20200902', N'∞°¿¸¡¶«∞',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
+SELECT 1,N'20200902', N'Í∞ÄÏ†ÑÏ†úÌíà',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
 INSERT INTO TBLItem(ItemSeq,ItemDate, ItemName,UserSeq)
-SELECT 2,N'20200902', N'»ﬁ¥Î∆˘', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
+SELECT 2,N'20200902', N'Ìú¥ÎåÄÌè∞', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
 
 DELETE FROM TBLBase WHERE UserSeq = 1
 SELECT * FROM TBLItem
@@ -234,7 +234,7 @@ SELECT * FROM TBLItem
 
 
  /*
-  NO ACTION : ¬¸¡∂π´∞·º∫ ¿ßπËµ«¥¬ «‡¿ß ±›¡ˆ
+  NO ACTION : Ï∞∏Ï°∞Î¨¥Í≤∞ÏÑ± ÏúÑÎ∞∞ÎêòÎäî ÌñâÏúÑ Í∏àÏßÄ
  
 */
 DROP TABLE TBLItem
@@ -242,8 +242,8 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLItem') AND Xtype
 BEGIN
 	CREATE TABLE TBLItem
 	(
-		ItemSeq			INT				,
-		ItemDate		NCHAR(8)		,
+		ItemSeq			INT		,
+		ItemDate		NCHAR(8)	,
 		ItemName		NVARCHAR(30)	,
 		UserSeq			INT	DEFAULT(5)
 		
@@ -254,9 +254,9 @@ BEGIN
 END
 
 INSERT INTO TBLItem(ItemSeq,ItemDate,ItemName,UserSeq)
-SELECT 1,N'20200902', N'∞°¿¸¡¶«∞',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
+SELECT 1,N'20200902', N'Í∞ÄÏ†ÑÏ†úÌíà',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
 INSERT INTO TBLItem(ItemSeq,ItemDate, ItemName,UserSeq)
-SELECT 2,N'20200902', N'»ﬁ¥Î∆˘', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
+SELECT 2,N'20200902', N'Ìú¥ÎåÄÌè∞', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
 UPDATE TBLBase
    SET UserSeq = 5
  WHERE UserSeq = 1
@@ -266,8 +266,8 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLItem') AND Xtype
 BEGIN
 	CREATE TABLE TBLItem
 	(
-		ItemSeq			INT				,
-		ItemDate		NCHAR(8)		,
+		ItemSeq			INT		,
+		ItemDate		NCHAR(8)	,
 		ItemName		NVARCHAR(30)	,
 		UserSeq			INT	DEFAULT(5)
 		
@@ -277,7 +277,7 @@ BEGIN
 	)
 END
 INSERT INTO TBLItem(ItemSeq,ItemDate,ItemName,UserSeq)
-SELECT 1,N'20200902', N'∞°¿¸¡¶«∞',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
+SELECT 1,N'20200902', N'Í∞ÄÏ†ÑÏ†úÌíà',1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 1)
 INSERT INTO TBLItem(ItemSeq,ItemDate, ItemName,UserSeq)
-SELECT 2,N'20200902', N'»ﬁ¥Î∆˘', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
+SELECT 2,N'20200902', N'Ìú¥ÎåÄÌè∞', 1 WHERE NOT EXISTS(SELECT 1 FROM TBLItem WHERE UserSeq = 2)
 DELETE FROM TBLBase WHERE UserSeq = 1
