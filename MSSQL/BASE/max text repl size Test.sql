@@ -7,14 +7,11 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLImage') AND Xtyp
 BEGIN
 	CREATE TABLE TBLImage
 	(
-		DataSeq		INT				,
+		DataSeq		INT		,
 		Photo		NVARCHAR(50)	,
 		Image		VARBINARY(MAX)
 	)
 END
-/*************************************************************************************************
- 테이블 생성
-**************************************************************************************************/
 
 INSERT INTO TBLImage
 SELECT 1, N'유투브', BulkColumn 
