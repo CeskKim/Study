@@ -1,13 +1,13 @@
 USE TestDB
 GO
 --/*************************************************************************************************
--- ≈◊¿Ã∫Ì ª˝º∫
+-- ÌÖåÏù¥Î∏î ÏÉùÏÑ±
 --**************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLPattern') AND xtype = 'U')
 BEGIN
 	CREATE TABLE TBLPattern
 	(
-		Seq	INT				,
+		Seq	INT		,
 		Val	NVARCHAR(20)	,
 		
 		CONSTRAINT PK_TBLPattern PRIMARY KEY(Seq)
@@ -20,16 +20,16 @@ SELECT @SNum = 1
 WHILE @SNum <= 100
 BEGIN
 	INSERT INTO TBLPattern
-	SELECT @SNum, N'µ•¿Ã≈Õ_' + CONVERT(NVARCHAR, @SNum) 
+	SELECT @SNum, N'Îç∞Ïù¥ÌÑ∞_' + CONVERT(NVARCHAR, @SNum) 
 	 WHERE NOT EXISTS(SELECT 1 
-						FROM TBLPattern
-					   WHERE @SNum = Seq)
+			    FROM TBLPattern
+			   WHERE @SNum = Seq)
 	SELECT @SNum = @SNum + 1
 END
 
 /*************************************************************************************************
-  UPSERT anti-pattern Procedure ª˝º∫
-  1.∏÷∆ºæ≤∑πµÂ ªÁøÎ -> ±‚∫ª≈∞ ø¿∑˘ πﬂª˝ ø©¡ˆ
+  UPSERT anti-pattern Procedure ÏÉùÏÑ±
+  1.Î©ÄÌã∞Ïì∞Î†àÎìú ÏÇ¨Ïö© -> Í∏∞Î≥∏ÌÇ§ Ïò§Î•ò Î∞úÏÉù Ïó¨ÏßÄ
 **************************************************************************************************/
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('_SPUPSERTPattern') AND xtype = 'P')
 DROP PROC _SPUPSERTPattern
@@ -41,18 +41,18 @@ AS
 	BEGIN TRAN
 	SET NOCOUNT ON 
 	IF EXISTS(SELECT 1 
-				FROM TBLPattern 
-			   WHERE Seq = @Seq)
+		    FROM TBLPattern 
+		  WHERE Seq = @Seq)
 	BEGIN
 		UPDATE TBLPattern 
-		   SET Val = N'Antiµ•¿Ã≈Õµ•¿Ã≈Õ_' + CONVERT(NVARCHAR, @Seq)
+		   SET Val = N'AntiÎç∞Ïù¥ÌÑ∞Îç∞Ïù¥ÌÑ∞_' + CONVERT(NVARCHAR, @Seq)
 		 WHERE Seq = @Seq
 		 
 	END
 	ELSE
 	BEGIN
 		INSERT INTO TBLPattern
-		SELECT @Seq, N'µ•¿Ã≈Õ_' + CONVERT(NVARCHAR, @Seq) 
+		SELECT @Seq, N'Îç∞Ïù¥ÌÑ∞_' + CONVERT(NVARCHAR, @Seq) 
 	END
 	
 	IF @@ERROR <> 0
@@ -69,7 +69,7 @@ EXEC _SPUPSERTPattern 105
 GO 10 
 
 /*************************************************************************************************
- UPDATE ±∏πÆ (UPDLOCK, SERIALIZABLE)√ﬂ∞° 
+ UPDATE Íµ¨Î¨∏ (UPDLOCK, SERIALIZABLE)Ï∂îÍ∞Ä 
 **************************************************************************************************/
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('_SPUPSERTPattern') AND xtype = 'P')
 DROP PROC _SPUPSERTPattern
@@ -80,12 +80,12 @@ CREATE PROC _SPUPSERTPattern
 AS	BEGIN TRAN
 	SET NOCOUNT ON 
 	UPDATE TBLPattern WITH(UPDLOCK, SERIALIZABLE)
-	   SET Val = N'Antiµ•¿Ã≈Õµ•¿Ã≈Õ_' + CONVERT(NVARCHAR, @Seq)
+	   SET Val = N'AntiÎç∞Ïù¥ÌÑ∞Îç∞Ïù¥ÌÑ∞_' + CONVERT(NVARCHAR, @Seq)
 	 WHERE Seq = @Seq
 	IF @@ROWCOUNT = 0 
 	BEGIN
 		INSERT INTO TBLPattern
-		SELECT @Seq, N'µ•¿Ã≈Õ_' + CONVERT(NVARCHAR, @Seq) 
+		SELECT @Seq, N'Îç∞Ïù¥ÌÑ∞_' + CONVERT(NVARCHAR, @Seq) 
 	END
 	IF @@ERROR <> 0
 	BEGIN
@@ -102,7 +102,7 @@ GO 5
 
 
 /*************************************************************************************************
- INSERT ±∏πÆ EXISTS (UPDLOCK, SERIALIZABLE)√ﬂ∞° 
+ INSERT Íµ¨Î¨∏ EXISTS (UPDLOCK, SERIALIZABLE)Ï∂îÍ∞Ä 
 **************************************************************************************************/
 
 IF EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('_SPUPSERTPattern') AND xtype = 'P')
@@ -117,14 +117,14 @@ AS
 	IF EXISTS(SELECT 1 FROM TBLPattern WITH(UPDLOCK, SERIALIZABLE) WHERE Seq = @Seq)
 	BEGIN
 		UPDATE TBLPattern
-		  SET Val = N'Antiµ•¿Ã≈Õµ•¿Ã≈Õ_' + CONVERT(NVARCHAR, @Seq)
+		  SET Val = N'AntiÎç∞Ïù¥ÌÑ∞Îç∞Ïù¥ÌÑ∞_' + CONVERT(NVARCHAR, @Seq)
 		WHERE Seq = @Seq
 	END
 
 	ELSE
 	BEGIN
 		INSERT INTO TBLPattern
-		SELECT @Seq, N'µ•¿Ã≈Õ_' + CONVERT(NVARCHAR, @Seq) 
+		SELECT @Seq, N'Îç∞Ïù¥ÌÑ∞_' + CONVERT(NVARCHAR, @Seq) 
 	END
 	IF @@ERROR <> 0
 	BEGIN
