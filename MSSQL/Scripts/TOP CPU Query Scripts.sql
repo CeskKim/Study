@@ -1,0 +1,30 @@
+USE ExampleDB
+GO
+
+/*************************************************************************************************
+ 상위 50개의 CPU 시간소모 조회
+ 1.sys.dm_exec_query_stats : 실행된 쿼리의 통계정보
+ 2.sys.dm_exec_sql_text    : SQL에서 처리 된 내역을 텍스트 형식으로 표현
+**************************************************************************************************/
+SELECT TOP 50
+      ObjectName         = OBJECT_SCHEMA_NAME(qt.objectid,dbid) + '.' + OBJECT_NAME(qt.objectid, qt.dbid)
+     ,TextData           = qt.text
+     ,DiskReads          = qs.total_physical_reads   
+     ,MemoryReads        = qs.total_logical_reads    
+     ,Executions         = qs.execution_count
+     ,TotalCPUTime       = qs.total_worker_time
+     ,AverageCPUTime     = qs.total_worker_time/qs.execution_count
+     ,DiskWaitAndCPUTime = qs.total_elapsed_time
+     ,MemoryWrites       = qs.max_logical_writes
+     ,DateCached         = qs.creation_time
+     ,DatabaseName       = DB_Name(qt.dbid)
+     ,LastExecutionTime  = qs.last_execution_time
+ FROM sys.dm_exec_query_stats					 AS qs
+ CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) AS qt
+ ORDER BY qs.total_worker_time DESC;
+
+
+/*************************************************************************************************
+ 참조사이트
+ https://ittutorial.org/sql-server-dba-scripts-all-in-one-useful-ms-sql-dba-database-administration-scripts/?fbclid=IwAR0sronvPn0lshQ9nYNqaLKP6FnOZ_9I3oq1T1kkGMQnYNQDkQ7Xzxag6JE
+**************************************************************************************************/
