@@ -4,13 +4,13 @@ SET NOCOUNT ON
 SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
 /*************************************************************************************************
- Å×ÀÌºí»ý¼º
+ í…Œì´ë¸”ìƒì„±
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLProduct') AND Xtype = 'U')
 BEGIN
 	CREATE TABLE TBLProduct
 	(
-		ProductSeq		INT				,
+		ProductSeq		INT		,
 		ProductNo		NVARCHAR(30)	,
 
 		CONSTRAINT PK_TBLProduct PRIMARY KEY(ProductSeq)
@@ -21,10 +21,10 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLProductItem') AN
 BEGIN
 	CREATE TABLE TBLProductItem
 	(
-		ProductSeq		INT				,
-		ProductSerl		INT				,
+		ProductSeq		INT		,
+		ProductSerl		INT		,
 		DetailName		NVARCHAR(50)	,
-		Qty				DECIMAL(19,5)	,
+		Qty			DECIMAL(19,5)	,
 		Price			DECIMAL(19,5)
 
 		CONSTRAINT PK_TBLProductItem PRIMARY KEY(ProductSeq,ProductSerl)
@@ -35,8 +35,8 @@ IF NOT EXISTS(SELECT 1 FROM sysobjects WHERE ID = OBJECT_ID('TBLProductPlan') AN
 BEGIN
 	CREATE TABLE TBLProductPlan
 	(
-		ProductSeq		INT				,
-		ProductSerl		INT				,
+		ProductSeq		INT		,
+		ProductSerl		INT		,
 		StartPlace		NVARCHAR(50)	,
 		EndPlace		NVARCHAR(50)	,
 		Remark			NVARCHAR(100)
@@ -59,26 +59,26 @@ BEGIN
 END
 
 INSERT INTO TBLProductItem(ProductSeq,ProductSerl,DetailName,Qty,Price)
-SELECT 1,1, N'¿¡¾îÆÌ', 3, 10000 WHERE NOT EXISTS(SELECT 1 FROM TBLProductItem WHERE ProductSeq = 1 AND  ProductSerl = 1) UNION ALL
-SELECT 1,2, N'¾ÆÀÌ¸Æ', 2, 20000 WHERE NOT EXISTS(SELECT 1 FROM TBLProductItem WHERE ProductSeq = 1 AND  ProductSerl = 2) UNION ALL
-SELECT 1,3, N'¾ÆÀÌÆÐµå', 1, 30000 WHERE NOT EXISTS(SELECT 1 FROM TBLProductItem WHERE ProductSeq = 1 AND  ProductSerl = 3)
+SELECT 1,1, N'ì—ì–´íŒŸ', 3, 10000 WHERE NOT EXISTS(SELECT 1 FROM TBLProductItem WHERE ProductSeq = 1 AND  ProductSerl = 1) UNION ALL
+SELECT 1,2, N'ì•„ì´ë§¥', 2, 20000 WHERE NOT EXISTS(SELECT 1 FROM TBLProductItem WHERE ProductSeq = 1 AND  ProductSerl = 2) UNION ALL
+SELECT 1,3, N'ì•„ì´íŒ¨ë“œ', 1, 30000 WHERE NOT EXISTS(SELECT 1 FROM TBLProductItem WHERE ProductSeq = 1 AND  ProductSerl = 3)
    
 INSERT INTO TBLProductPlan(ProductSeq,ProductSerl,StartPlace,EndPlace,Remark)
-SELECT 1,1, N'¼­¿ï', N'´ë±¸', N'¹°Ç° Ã¢±¸' WHERE NOT EXISTS(SELECT 1 FROM TBLProductPlan WHERE ProductSeq = 1 AND  ProductSerl = 1) UNION ALL
-SELECT 1,2, N'¼­¿ï', N'ºÎ»ê', N'º¸°ü Ã¢±¸' WHERE NOT EXISTS(SELECT 1 FROM TBLProductPlan WHERE ProductSeq = 1 AND  ProductSerl = 2)
+SELECT 1,1, N'ì„œìš¸', N'ëŒ€êµ¬', N'ë¬¼í’ˆ ì°½êµ¬' WHERE NOT EXISTS(SELECT 1 FROM TBLProductPlan WHERE ProductSeq = 1 AND  ProductSerl = 1) UNION ALL
+SELECT 1,2, N'ì„œìš¸', N'ë¶€ì‚°', N'ë³´ê´€ ì°½êµ¬' WHERE NOT EXISTS(SELECT 1 FROM TBLProductPlan WHERE ProductSeq = 1 AND  ProductSerl = 2)
    
 
 /*************************************************************************************************
- Á¶ÀÎ Á¶°Ç È®ÀÎ(½ÇÇà°èÈ¹)
- 1.TBLProductPlan Á¶ÀÎ½Ã TBLProduct,TBLProductItem Á¶°ÇÀý »ç¿ë -> ½ÇÇà°èÈ¹½Ã °æ°í : Á¶°ÇÀý ¾øÀ½ È®ÀÎ
-   => TBLProductPlan¿¡ ´ëÇÑ Á¶ÀÎ Á¶°ÇÀýÀÌ ¾ø±â ¶§¹®¿¡ ¹ß»ý
+ ì¡°ì¸ ì¡°ê±´ í™•ì¸(ì‹¤í–‰ê³„íš)
+ 1.TBLProductPlan ì¡°ì¸ì‹œ TBLProduct,TBLProductItem ì¡°ê±´ì ˆ ì‚¬ìš© -> ì‹¤í–‰ê³„íšì‹œ ê²½ê³  : ì¡°ê±´ì ˆ ì—†ìŒ í™•ì¸
+   => TBLProductPlanì— ëŒ€í•œ ì¡°ì¸ ì¡°ê±´ì ˆì´ ì—†ê¸° ë•Œë¬¸ì— ë°œìƒ
 **************************************************************************************************/
---Á¶°ÇÀý ¾øÀ½
+--ì¡°ê±´ì ˆ ì—†ìŒ
 SELECT *
   FROM TBLProduct			AS A
   JOIN TBLProductItem		AS B ON A.ProductSeq = B.ProductSeq
   JOIN TBLProductPlan		AS C ON A.ProductSeq = B.ProductSeq
---Á¤»ó
+--ì •ìƒ
 SELECT *
   FROM TBLProduct			AS A
   JOIN TBLProductItem		AS B ON A.ProductSeq = B.ProductSeq
