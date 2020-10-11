@@ -8,8 +8,8 @@ ___
 - SP(Stored Procedure), Fuction, View제외 Table 및 Data만 마이그레이션
 ___
 
-## 설치
-- 설치주소
+## 설치 과정
+- 설치주소(Mysql workbench)
 - https://dev.mysql.com/downloads/workbench/
 - 설치문제(C++ 설치요청)인 경우 아래 링크를 다운 받아 설치 진행
 - https://igotit.tistory.com/entry/Visual-C-2010-2015-2017-2019-%EC%9E%AC%EB%B0%B0%ED%8F%AC-%EA%B0%80%EB%8A%A5-%ED%8C%A8%ED%82%A4%EC%A7%80-32bit-64bit
@@ -17,8 +17,8 @@ ___
 
 ![MySQLWorkbenchDownload1](./img/MySQLWorkbenchDownload1.JPG)
 ![MySQLWorkbenchDownload2](./img/MySQLWorkbenchDownload2.JPG)
-
 ___
+
 ## ODBC 연결
 - MSSQL ODBC연결
 
@@ -27,3 +27,22 @@ ___
 ![MSSQLODBCConnect1](./img/MSSQLODBCConnect1.JPG)
 ![MSSQLODBCConnect2](./img/MSSQLODBCConnect2.JPG)
 ![MSSQLODBCConnect3](./img/MSSQLODBCConnect3.JPG)
+___
+
+## 마이그레이션 과정
+- Mysql workbench이용 마이그레이션
+
+![MSSQLToMySQLConnect1](./img/MSSQLToMySQLConnect1.JPG)
+![MSSQLToMySQLConnect2](./img/MSSQLToMySQLConnect2.JPG)
+![MSSQLToMySQLConnect3](./img/MSSQLToMySQLConnect3.JPG)
+![MSSQLToMySQLConnect4](./img/MSSQLToMySQLConnect4.JPG)
+![MSSQLToMySQLConnect5](./img/MSSQLToMySQLConnect5.JPG)
+![MSSQLToMySQLConnect6](./img/MSSQLToMySQLConnect6.JPG)
+![MSSQLToMySQLConnect7](./img/MSSQLToMySQLConnect7.JPG)
+![MSSQLToMySQLConnect8](./img/MSSQLToMySQLConnect8.JPG)
+![MSSQLToMySQLConnect9](./img/MSSQLToMySQLConnect9.JPG)
+![MSSQLToMySQLConnect10](./img/MSSQLToMySQLConnect10.JPG)
+![MSSQLToMySQLConnect11](./img/MSSQLToMySQLConnect11.JPG)
+![MSSQLToMySQLConnect12](./img/MSSQLToMySQLConnect12.JPG)
+![MSSQLToMySQLConnect13](./img/MSSQLToMySQLConnect13.JPG)
+
