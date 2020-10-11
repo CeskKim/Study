@@ -34,15 +34,6 @@ ___
 
 ![MSSQLToMySQLConnect1](./img/MSSQLToMySQLConnect1.JPG)
 ![MSSQLToMySQLConnect2](./img/MSSQLToMySQLConnect2.JPG)
-![MSSQLToMySQLConnect3](./img/MSSQLToMySQLConnect3.JPG)
-![MSSQLToMySQLConnect4](./img/MSSQLToMySQLConnect4.JPG)
-![MSSQLToMySQLConnect5](./img/MSSQLToMySQLConnect5.JPG)
-![MSSQLToMySQLConnect6](./img/MSSQLToMySQLConnect6.JPG)
-![MSSQLToMySQLConnect7](./img/MSSQLToMySQLConnect7.JPG)
-![MSSQLToMySQLConnect8](./img/MSSQLToMySQLConnect8.JPG)
-![MSSQLToMySQLConnect9](./img/MSSQLToMySQLConnect9.JPG)
-![MSSQLToMySQLConnect10](./img/MSSQLToMySQLConnect10.JPG)
-![MSSQLToMySQLConnect11](./img/MSSQLToMySQLConnect11.JPG)
-![MSSQLToMySQLConnect12](./img/MSSQLToMySQLConnect12.JPG)
-![MSSQLToMySQLConnect13](./img/MSSQLToMySQLConnect13.JPG)
+![MSSQLToMYSQLConnect3](./img/MSSQLToMYSQLConnect3.JPG)
+
 
