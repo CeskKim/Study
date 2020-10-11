@@ -8,12 +8,19 @@ ___
 - SP(Stored Procedure), Fuction, View제외 Table 및 Data만 마이그레이션
 ___
 
-## 설치과정
+## 설치
 - 설치주소
 - https://dev.mysql.com/downloads/workbench/
 - 설치문제(C++ 설치요청)인 경우 아래 링크를 다운 받아 설치 진행
 - https://igotit.tistory.com/entry/Visual-C-2010-2015-2017-2019-%EC%9E%AC%EB%B0%B0%ED%8F%AC-%EA%B0%80%EB%8A%A5-%ED%8C%A8%ED%82%A4%EC%A7%80-32bit-64bit
 - MySQL WorkBench 설치
+
 ![MySQLWorkbenchDownload1](./img/MySQLWorkbenchDownload1.JPG)
 ![MySQLWorkbenchDownload2](./img/MySQLWorkbenchDownload2.JPG)
 
+___
+## ODBC 연결
+- MSSQL ODBC연결
+
+![MSSQLODBCAdd](./img/MSSQLODBCAdd.JPG)
+![MSSQLODBCClientSetting](./img/MSSQLODBCClientSetting.JPG)
