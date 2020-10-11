@@ -45,3 +45,16 @@ ___
 ![MSSQLToMYSQLConnect11](./img/MSSQLToMYSQLConnect11.JPG)
 ![MSSQLToMYSQLConnect12](./img/MSSQLToMYSQLConnect12.JPG)
 ![MSSQLToMYSQLConnect13](./img/MSSQLToMYSQLConnect13.JPG)
+___
+
+## 결론
+
+- 데이터 확인(MaraiDB, MSSQL)
+
+![MSSQLToMySQLResult1](./img/MSSQLToMySQLResult1.JPG)
+![MSSQLToMySQLResult2](./img/MSSQLToMySQLResult2.JPG)
+
+- MariaDB와 MSSQL 마이그레이션 데이터, 테이블 내역 확인 
+
+
+
