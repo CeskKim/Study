@@ -24,3 +24,6 @@ ___
 
 ![MSSQLODBCAdd](./img/MSSQLODBCAdd.JPG)
 ![MSSQLODBCClientSetting](./img/MSSQLODBCClientSetting.JPG)
+![MSSQLODBCConnect1](./img/MSSQLODBCConnect1.JPG)
+![MSSQLODBCConnect2](./img/MSSQLODBCConnect2.JPG)
+![MSSQLODBCConnect3](./img/MSSQLODBCConnect3.JPG)
