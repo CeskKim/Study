@@ -14,4 +14,4 @@ ___
 - 설치문제(C++ 설치요청)인 경우 아래 링크를 다운 받아 설치 진행
 - https://igotit.tistory.com/entry/Visual-C-2010-2015-2017-2019-%EC%9E%AC%EB%B0%B0%ED%8F%AC-%EA%B0%80%EB%8A%A5-%ED%8C%A8%ED%82%A4%EC%A7%80-32bit-64bit
 - MySQL WorkBench 설치
-![MySQL Workbench Download_1](./img/MySQL Workbench Download_1.JPG)
+![MySQL Workbench Download1](./img/MySQL Workbench Download1.JPG)
