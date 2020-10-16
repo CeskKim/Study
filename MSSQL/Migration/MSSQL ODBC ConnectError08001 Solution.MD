@@ -10,3 +10,8 @@ ___
 ___
 
 ## 실행내역
+- SQL Server 구성 관리자
+
+![ODBCConnectError08001Solution0.JPG](./img/ODBCConnectError08001Solution0.JPG.JPG)
+
+
