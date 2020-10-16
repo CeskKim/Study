@@ -14,4 +14,14 @@ ___
 
 ![ODBCConnectError08001Solution0.JPG](./img/ODBCConnectError08001Solution0.JPG)
 
+- 인/아웃바운드  동일 설정
 
+![ODBCConnectError08001Solution1.JPG](./img/ODBCConnectError08001Solution1.JPG)
+
+![ODBCConnectError08001Solution2.JPG](./img/ODBCConnectError08001Solution2.JPG)
+
+![ODBCConnectError08001Solution3.JPG](./img/ODBCConnectError08001Solution3.JPG)
+
+![ODBCConnectError08001Solution4.JPG](./img/ODBCConnectError08001Solution4.JPG)
+
+![ODBCConnectError08001Solution5.JPG](./img/ODBCConnectError08001Solution5.JPG)
