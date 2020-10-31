@@ -1,11 +1,11 @@
 /*************************************************************************************************
  SEQUENCE CREATE 
- 1.START WITH	: ½ÃÀÛÁ¡
- 2.INCREMENT BY : Áõ°¡°ª
- 3.MINVALUE		: ÃÖ¼Ò°ª
- 4.MAXVALUE		: ÃÖ´ë°ª
- 5.CYCLE		: ¼øÈ¯ -> ¼øÈ¯½Ã ÃÖ¼Ò °ª ºÎÅÍ ¼øÈ¯
- 6.CACHE		: Ä³½Ã(1·ÎÁöÁ¤ NO CACHE)
+ 1.START WITH	: ì‹œìž‘ì 
+ 2.INCREMENT BY : ì¦ê°€ê°’
+ 3.MINVALUE	: ìµœì†Œê°’
+ 4.MAXVALUE	: ìµœëŒ€ê°’
+ 5.CYCLE	: ìˆœí™˜ -> ìˆœí™˜ì‹œ ìµœì†Œ ê°’ ë¶€í„° ìˆœí™˜
+ 6.CACHE	: ìºì‹œ(1ë¡œì§€ì • NO CACHE)
 **************************************************************************************************/
 IF NOT EXISTS(SELECT 1 FROM sys.sequences WHERE name = N'TestSEQUENCE')
 BEGIN
