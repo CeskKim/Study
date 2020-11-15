@@ -1,7 +1,7 @@
 USE TestDB 
 GO
 /*************************************************************************************************
- TVP ª˝º∫
+ TVP ÏÉùÏÑ±
 **************************************************************************************************/
 CREATE TYPE dbo.LessonType AS TABLE
 (	
@@ -16,7 +16,7 @@ CREATE TABLE dbo.TBLLesson
 )
 
 /*************************************************************************************************
- TVP Procedure ª˝º∫
+ TVP Procedure ÏÉùÏÑ±
 **************************************************************************************************/
 CREATE PROCEDURE dbo.Usp_InsertLesson
 	@ParLessonType LessonType READONLY
@@ -37,17 +37,17 @@ VALUES(3, N'Geometry')
 EXEC dbo.Usp_InsertLesson @VarLessonType
 
 /*************************************************************************************************
- MEMORY_OPTIMIZED ªÁøÎ
+ MEMORY_OPTIMIZED ÏÇ¨Ïö©
 **************************************************************************************************/
---FileGroupª˝º∫
+--FileGroupÏÉùÏÑ±
 ALTER DATABASE TestDB ADD FILEGROUP IMOLTP CONTAINS MEMORY_OPTIMIZED_DATA;
---FileGroup¿ßƒ° ª˝º∫
+--FileGroupÏúÑÏπò ÏÉùÏÑ±
 ALTER DATABASE TestDB ADD FILE (NAME='IMOLTP',FILENAME='C:\MOPT') TO FILEGROUP IMOLTP;
 
 
 CREATE TYPE dbo.LessonTypeOptimized AS TABLE
 (
-	LessonID INT NOT NULL PRIMARY KEY NONCLUSTERED  HASH WITH(BUCKET_COUNT = 1000) --CLUSTERED INDEX¥¬ MEMORY_ORPTIMZED ¡ˆø¯(X)
+	LessonID INT NOT NULL PRIMARY KEY NONCLUSTERED  HASH WITH(BUCKET_COUNT = 1000) --CLUSTERED INDEXÎäî MEMORY_ORPTIMZED ÏßÄÏõê(X)
 ,	LessonName NVARCHAR(50)	
 ) WITH (MEMORY_OPTIMIZED = ON)
 
@@ -70,9 +70,9 @@ INSERT INTO @VarLessonType_OptiMized
 VALUES(6, N'Geometry')
 
 /*************************************************************************************************
- PerfMon ∏¥œ≈Õ∏µ
+ PerfMon Î™®ÎãàÌÑ∞ÎßÅ
  *SQLServer:Database- > Write  Transcations/sec. tempdb -> ADD
- 1.TVP VS TVP_Memory_Optimized ∫Ò±≥
+ 1.TVP VS TVP_Memory_Optimized ÎπÑÍµê
 **************************************************************************************************/
 --TVP
 TRUNCATE TABLE dbo.TBLLesson
@@ -126,3 +126,8 @@ VALUES ( @Counter, 'Geometry'
 EXECUTE Usp_InsertLessonMemOpt @VarLessonType_MemOptimized
 DELETE @VarLessonType_MemOptimized
 END
+/*************************************************************************************************
+ Ï∞∏Ï°∞ÏÇ¨Ïù¥Ìä∏
+ https://www.sqlshack.com/table-valued-parameters-in-sql-server/
+ https://www.sqlservercentral.com/articles/creating-memory-optimized-table-in-sql-server-2014
+**************************************************************************************************/
