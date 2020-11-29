@@ -13,7 +13,7 @@
 //샘플데이터 삽입
 .ingest into table StormEvents h'https://kustosamplefiles.blob.core.windows.net/samplefiles/StormEvents.csv?sv=2019-12-12&ss=b&srt=o&sp=r&se=2022-09-05T02:23:52Z&st=2020-09-04T18:23:52Z&spr=https&sig=VrOfQMT1gUrHltJ8uhjYcCequEcfhjyyMX%2FSc3xsCy4%3D' with (ignoreFirstRecord=true)
 
-// SQL TOP 10 과 같은 기능
+// 지정 행 수를 
 StormEvents
 | sort by StartTime desc
 | take 10     
