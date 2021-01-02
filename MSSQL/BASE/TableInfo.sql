@@ -1,4 +1,4 @@
---TABLE SCHEMA TABLE 종류 확인
+--TABLE SCHEMA TABLE Type Search
 SELECT *
 FROM INFORMATION_SCHEMA.TABLES
 
@@ -10,7 +10,7 @@ SELECT *
 FROM sys.tables
 
 
---TABLE COLUMN 확인
+--TABLE COLUMN Search
 SELECT *
 FROM INFORMATION_SCHEMA.COLUMNS
 
@@ -18,7 +18,7 @@ SELECT *
 FROM sys.columns 
 
 
---TABLE 전체 Row Count 확인
+--TABLE Total Row Count Search
 SELECT
 	SC.name + '.' + TA.name AS TableName
 ,	SUM(PA.rows) AS TableRowCnt
@@ -38,5 +38,3 @@ GROUP BY
 ,	TA.name
 ORDER BY
 	SUM(PA.rows) DESC
-
-
