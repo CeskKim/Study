@@ -1,5 +1,5 @@
 /*************************************************************************************************
- ≈◊¿Ã∫Ì ª˝º∫
+ ÌÖåÏù¥Î∏î ÏÉùÏÑ±
 **************************************************************************************************/
 CREATE TABLE dbo.Player
 (	
@@ -10,52 +10,50 @@ CREATE TABLE dbo.Player
 )
 
 /*************************************************************************************************
- ≈◊¿Ã∫Ì ª¿‘ π◊ ∆Æ∑£¿Ëº«
+ ÌÖåÏù¥Î∏î ÏÇΩÏûÖ Î∞è Ìä∏ÎûúÏû≠ÏÖò
 **************************************************************************************************/ 
 INSERT INTO dbo.Player(PlayerName)
-SELECT N'¿Ãµø±π' UNION ALL
-SELECT N'√÷øÎºˆ' UNION ALL
-SELECT N'±Ë¡§øÏ'
+SELECT N'Ïù¥ÎèôÍµ≠' UNION ALL
+SELECT N'ÏµúÏö©Ïàò' UNION ALL
+SELECT N'ÍπÄÏ†ïÏö∞'
 
 /*************************************************************************************************
- ººº«1
+ ÏÑ∏ÏÖò1
 **************************************************************************************************/ 
 BEGIN TRAN
 
 	UPDATE dbo.Player 
-	SET PlayerName = N'±‚º∫øÎ'
+	SET PlayerName = N'Í∏∞ÏÑ±Ïö©'
 	WHERE PlayerSeq = 15
 	   
 	WAITFOR DELAY '00:00:05'
 
 	UPDATE dbo.Player  
-	SET PlayerName = N'¿Ã√ªøÎ'
+	SET PlayerName = N'Ïù¥Ï≤≠Ïö©'
 	WHERE PlayerSeq = 16
 
 ROLLBACK
 
 /*************************************************************************************************
- ººº«2
+ ÏÑ∏ÏÖò2
 **************************************************************************************************/ 
 BEGIN TRAN
 
 	UPDATE dbo.Player 
-	SET PlayerName = N'±‚º∫øÎ'
+	SET PlayerName = N'Í∏∞ÏÑ±Ïö©'
 	WHERE PlayerSeq = 15
 	   
 	WAITFOR DELAY '00:00:05'
 
 	UPDATE dbo.Player  
-	SET PlayerName = N'¿Ã√ªøÎ'
+	SET PlayerName = N'Ïù¥Ï≤≠Ïö©'
 	WHERE PlayerSeq = 16
 
 ROLLBACK
 
-
 /*************************************************************************************************
- Deadlock »Æ¿Œ
+ Deadlock ÌôïÏù∏
 **************************************************************************************************/ 
-
 SELECT 
          CAST(event_data AS XML).value('(/event/@timestamp)[1]', 'datetime2') AS TIMESTAMP
         ,CAST(event_data AS XML).value('(/event/data[@name="server_name"]/value)[1]', 'sysname') AS server_name
@@ -66,3 +64,5 @@ SELECT
 FROM sys.fn_xe_file_target_read_file('https://<your storage account>.blob.core.windows.net/eventfile/deadlockevt', NULL, NULL, NULL)
 WHERE object_name = 'database_xml_deadlock_report' 
 ORDER BY 1
+							   
+SELECT * FROM sys.dm_tran_locks							   
