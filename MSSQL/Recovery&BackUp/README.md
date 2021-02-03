@@ -1,3 +1,3 @@
-#  Recovery&BakUp
+#  Recovery&BackUp
 ## 소개 
-- MSSQL Recovery&BakUp 관련 테스트 내역
+- MSSQL Recovery&BackUp 관련 테스트 내역
