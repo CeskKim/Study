@@ -7,3 +7,4 @@
 - [Recover&BackUp] : 복원 및 백업 테스트
 - [Scripts] : 검증 관련 스크립트 테스트
 - [Tuning] : 튜닝 테스트
+- [Monitoring] : 모니터링 
