@@ -1,0 +1,8 @@
+//Kusto 데이터 형 변환
+TestArgs = parse_json(tostring(Data.TestArgs)) // 스트링 및 json변환
+-> TestArgs.Stageidx or MailArgs['Stageidx']
+-> json형식으로 변환하여 dictionary 타입을 이용
+toint(TestArgs.Stageidx) in(조건절) //danymic형태에서는 in절에 int형 사용 불가
+
+//Type확인
+gettype(TestArgs)
