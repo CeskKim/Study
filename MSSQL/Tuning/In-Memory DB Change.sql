@@ -1,12 +1,16 @@
 /*************************************************************************************************
- In-Memory OLTP DB·Î º¯°æ
- 1.DISK Å×ÀÌºí°ú ´Ù¸£°Ô Latch°¡ ¹ß»ýÇÏÁö ¾ÊÀ½ ÆäÀÌÁö ±¸Á¶°¡ ¾Æ´Ñ °¢ ÇàÀ» Æ÷ÀÎÅÍ·Î Ã³¸®ÇÏ´Â ¹æ½Ä
+ In-Memory OLTP DBë¡œ ë³€ê²½
+ 1.DISK í…Œì´ë¸”ê³¼ ë‹¤ë¥´ê²Œ Latchê°€ ë°œìƒí•˜ì§€ ì•ŠìŒ íŽ˜ì´ì§€ êµ¬ì¡°ê°€ ì•„ë‹Œ ê° í–‰ì„ í¬ì¸í„°ë¡œ ì²˜ë¦¬í•˜ëŠ” ë°©ì‹
 **************************************************************************************************/
 ALTER DATABASE inMemoryDB ADD FILEGROUP [inMemoryDB_Fg] CONTAINS MEMORY_OPTIMIZED_DATA
 ALTER DATABASE inMemoryDB ADD FILE(NAME = inMemoryDB_dir, FILENAME = 'C:\InMemoryDB\inMemoryDB_dir') TO FILEGROUP inMemoryDB_Fg
-
 /*************************************************************************************************
- In-Memory OLTP¿¡¼­´Â µ¥ÀÌÅÍ°¡ ¸Þ¸ð¸® »óÁÖ
- ¼­¹ö ÀçºÎÆÃ½Ã µ¥ÀÌÅÍ À¯Áö¸¦ À§ÇØ Filestream¿¡ ÀúÀåµÈ µ¥ÀÌÅÍ, Æ®·£Àè¼Ç ·Î±×¸¦ »ç¿ë ÀçºÎÆÃ½Ã ÀúÀåµÈ µ¥ÀÌÅÍ¸¦
- ¸Þ¸ð¸®·Î ´Ù½Ã ·Îµå
+ In-Memory OLTPì—ì„œëŠ” ë°ì´í„°ê°€ ë©”ëª¨ë¦¬ ìƒì£¼
+ ì„œë²„ ìž¬ë¶€íŒ…ì‹œ ë°ì´í„° ìœ ì§€ë¥¼ ìœ„í•´ Filestreamì— ì €ìž¥ëœ ë°ì´í„°, íŠ¸ëžœìž­ì…˜ ë¡œê·¸ë¥¼ ì‚¬ìš© ìž¬ë¶€íŒ…ì‹œ ì €ìž¥ëœ ë°ì´í„°ë¥¼
+ ë©”ëª¨ë¦¬ë¡œ ë‹¤ì‹œ ë¡œë“œ
+**************************************************************************************************/
+/*************************************************************************************************
+ ì°¸ì¡°ìžë£Œ
+ https://m.blog.naver.com/PostView.nhn?blogId=gun0626&logNo=220089783486&proxyReferer=https:%2F%2Fwww.google.com%2F
+ https://channel9.msdn.com/Events/Channel9-Korea/SQL-/SQL-Server-2016-In-Memory-OLTP
 **************************************************************************************************/
