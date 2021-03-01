@@ -1,5 +1,3 @@
-## 소개
-- Azure 개인 공부 내역
-
-## 구성
-- [DevOps] : DevOps관련 테스트
+#  DevOps
+## 소개 
+- Azure DevOps 기본 관련 테스트 소스 내역
