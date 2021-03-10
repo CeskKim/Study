@@ -1,3 +1,0 @@
-<Docker ToolBox 설치>
-1.작업관리자 가상화 사용 여부 체크
-2.https://github.com/docker/toolbox/releases ToolBox(설치주소) -> DockerToolBox-19.03.1.exe 실행
