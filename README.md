@@ -3,4 +3,4 @@
 - 기타 공부 자료 저장소 
 ## 구조
 - [Algorithm] : 알고리즘 공부 내역
-- [LeetCode] : LeetCode 풀이 
+- [LeetCode] : LeetCode 공부  
